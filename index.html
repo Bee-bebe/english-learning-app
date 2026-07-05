@@ -384,6 +384,22 @@
         .status-text { font-size: 13px; color: var(--text-muted); min-width: 70px; text-align: center; }
 
         /* ===== Vocab Table ===== */
+                .clickable-word {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            transition: var(--transition);
+            border-radius: 4px;
+            padding: 0 4px;
+        }
+        .clickable-word:hover {
+            background: var(--accent-light);
+            transform: scale(1.05);
+        }
+        .clickable-word.speaking {
+            color: var(--danger);
+            animation: pulse 0.6s infinite;
+        }
         .vocab-section { margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--border-color); }
         .vocab-section h3 { font-size: 17px; margin-bottom: 10px; }
         .vocab-table-wrap { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
@@ -819,16 +835,24 @@
     // ================================================================
     //  5. SPEAK WORD
     // ================================================================
-    function speakWord(word, event) {
-        if (!word) return;
+        function speakWord(word, event) {
+        if (!word || word === '-' || word === '') return;
         if (speech.speaking) speech.cancel();
+        
         const utterance = new SpeechSynthesisUtterance(word);
         utterance.lang = 'en-US';
         utterance.rate = Math.min(currentSpeed, 1.2);
-        const btn = event?.target?.closest?.('.vocab-speaker-btn') || event?.target;
-        if (btn) { btn.classList.add('speaking'); setTimeout(() => btn.classList.remove('speaking'), 1000); }
-        utterance.onend = () => { if (btn) btn.classList.remove('speaking'); };
-        utterance.onerror = () => { if (btn) btn.classList.remove('speaking'); };
+        
+        // ไฮไลท์คำที่ถูกคลิก
+        const el = event?.target;
+        if (el) {
+            el.classList.add('speaking');
+            setTimeout(() => el.classList.remove('speaking'), 1000);
+        }
+        
+        utterance.onend = () => { if (el) el.classList.remove('speaking'); };
+        utterance.onerror = () => { if (el) el.classList.remove('speaking'); };
+        
         speech.speak(utterance);
     }
 
@@ -1037,8 +1061,8 @@
         vocabList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
     }
 
-                // ================================================================
-    //  11. RENDER VERBS (กริยา 3 ช่อง) + เสียงทุกช่อง
+                    // ================================================================
+    //  11. RENDER VERBS (กริยา 3 ช่อง) - คลิกที่คำเพื่อฟังเสียง
     // ================================================================
     function renderVerbs(rows) {
         if (rows.length < 2) {
@@ -1069,23 +1093,17 @@
                 <thead>
                     <tr>
                         <th>ช่อง 1 (Base)</th>
-                        <th>🔊</th>
                         <th>ช่อง 2 (Past)</th>
-                        <th>🔊</th>
                         <th>ช่อง 3 (PP)</th>
-                        <th>🔊</th>
                         <th>ความหมาย</th>
                         <th>ตัวอย่าง</th>
                     </tr>
                 </thead>
                 <tbody>${items.map(item => `
                     <tr>
-                        <td><strong>${item.base}</strong></td>
-                        <td><button class="vocab-speaker-btn" onclick="speakWord('${item.base}', event)">🔊</button></td>
-                        <td>${item.past || '-'}</td>
-                        <td>${item.past ? `<button class="vocab-speaker-btn" onclick="speakWord('${item.past}', event)">🔊</button>` : '-'}</td>
-                        <td>${item.pp || '-'}</td>
-                        <td>${item.pp ? `<button class="vocab-speaker-btn" onclick="speakWord('${item.pp}', event)">🔊</button>` : '-'}</td>
+                        <td class="clickable-word" onclick="speakWord('${item.base}', event)" title="คลิกเพื่อฟังเสียง">${item.base}</td>
+                        <td class="clickable-word" onclick="speakWord('${item.past}', event)" title="คลิกเพื่อฟังเสียง">${item.past || '-'}</td>
+                        <td class="clickable-word" onclick="speakWord('${item.pp}', event)" title="คลิกเพื่อฟังเสียง">${item.pp || '-'}</td>
                         <td>${item.meaning}</td>
                         <td>${item.example}</td>
                     </tr>
