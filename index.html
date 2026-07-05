@@ -651,7 +651,7 @@
     <!-- TABS (8 เมนู) -->
     <nav class="tabs" id="tabNav">
         <button class="tab-btn active" data-tab="stories">📖 เรื่องสั้น <span class="count" id="storyCount">0</span></button>
-        <button class="tab-btn" data-tab="vocabulary">📘 คำนาม <span class="count" id="vocabCount">0</span></button>
+        <button class="tab-btn" data-tab="vocabulary">📚 คำศัพท์ทั้งหมด <span class="count" id="vocabCount">0</span></button>
         <button class="tab-btn" data-tab="verbs">📗 กริยา 3 ช่อง <span class="count" id="verbCount">0</span></button>
         <button class="tab-btn" data-tab="phrases">💬 วลีสนทนา <span class="count" id="phraseCount">0</span></button>
         <button class="tab-btn" data-tab="structures">📐 โครงสร้าง <span class="count" id="structureCount">0</span></button>
@@ -672,10 +672,22 @@
             <div class="shortcuts-hint">⌨️ <kbd>Space</kbd> เล่น/หยุด · <kbd>→</kbd> เรื่องถัดไป · <kbd>←</kbd> เรื่องก่อน · <kbd>T</kbd> แปล</div>
         </section>
 
-        <!-- TAB: VOCABULARY -->
+                <!-- TAB: VOCABULARY (คำศัพท์ทั้งหมด) -->
         <section class="tab-panel" id="panel-vocabulary">
-            <h3 style="margin-bottom:12px;">📘 คำนาม (Noun) ทั้งหมด</h3>
-            <div id="vocabList" class="all-vocab-grid"><div class="loading">กำลังโหลด...</div></div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
+                <span style="font-weight:600;font-size:14px;color:var(--text-secondary);">🔎 กรองตามชนิด:</span>
+                <select id="vocabTypeFilter" style="padding:6px 14px;border-radius:20px;border:2px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:14px;font-family:var(--font);">
+                    <option value="all">ทั้งหมด</option>
+                    <option value="noun">Noun (คำนาม)</option>
+                    <option value="verb">Verb (คำกริยา)</option>
+                    <option value="adjective">Adjective (คำคุณศัพท์)</option>
+                    <option value="adverb">Adverb (คำวิเศษณ์)</option>
+                    <option value="phrasal verb">Phrasal Verb</option>
+                </select>
+                <input type="text" id="vocabSearchFilter" placeholder="🔍 ค้นหาคำศัพท์..." style="flex:1;min-width:150px;padding:6px 14px;border-radius:20px;border:2px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:14px;font-family:var(--font);outline:none;" />
+                <span style="font-size:14px;color:var(--text-muted);">พบ <span id="vocabFilterCount">0</span> คำ</span>
+            </div>
+            <div class="all-vocab-grid" id="vocabList"><div class="loading">กำลังโหลด...</div></div>
         </section>
 
         <!-- TAB: VERBS -->
@@ -1028,9 +1040,11 @@
         }
     }
 
+        // ================================================================
+    //  10. RENDER VOCABULARY (คำศัพท์ทั้งหมด + กรอง)
     // ================================================================
-    //  10. RENDER VOCABULARY (คำนาม)
-    // ================================================================
+    let allVocabularyData = []; // เก็บข้อมูลคำศัพท์ทั้งหมด
+
     function renderVocabulary(rows) {
         if (rows.length < 2) {
             vocabList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
@@ -1038,17 +1052,42 @@
             return;
         }
         const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
-        const items = rows.slice(1).map(row => {
+        allVocabularyData = rows.slice(1).map(row => {
             const get = (key) => {
                 const idx = header.indexOf(key);
                 return (idx !== -1 && idx < row.length) ? row[idx] : '';
             };
-            return { id: get('id'), word: get('word'), type: get('type'), meaning: get('meaning'), example: get('example') };
+            return {
+                id: get('id'),
+                word: get('word'),
+                type: get('type'),
+                meaning: get('meaning'),
+                example: get('example')
+            };
         }).filter(item => item.word && item.type && item.meaning);
 
-        vocabCount.textContent = items.length;
+        vocabCount.textContent = allVocabularyData.length;
+        applyVocabFilter(); // เรียกใช้ฟังก์ชันกรอง
+    }
 
-        const html = items.map(item => `
+    function applyVocabFilter() {
+        const typeFilter = document.getElementById('vocabTypeFilter')?.value || 'all';
+        const searchFilter = document.getElementById('vocabSearchFilter')?.value?.toLowerCase().trim() || '';
+        
+        let filtered = allVocabularyData;
+        if (typeFilter !== 'all') {
+            filtered = filtered.filter(item => item.type.toLowerCase() === typeFilter);
+        }
+        if (searchFilter) {
+            filtered = filtered.filter(item => 
+                item.word.toLowerCase().includes(searchFilter) || 
+                item.meaning.includes(searchFilter)
+            );
+        }
+
+        document.getElementById('vocabFilterCount').textContent = filtered.length;
+
+        const html = filtered.map(item => `
             <div class="all-vocab-item">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div><div class="word">${item.word}</div><div class="type">${item.type}</div></div>
@@ -1058,9 +1097,8 @@
                 ${item.example ? `<div style="font-size:13px;color:var(--text-muted);margin-top:4px;">📖 ${item.example}</div>` : ''}
             </div>
         `).join('');
-        vocabList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
+        vocabList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่พบคำศัพท์</div>';
     }
-
                     // ================================================================
     //  11. RENDER VERBS (กริยา 3 ช่อง) - คลิกที่คำเพื่อฟังเสียง
     // ================================================================
@@ -1710,8 +1748,14 @@
         if (tab === 'quiz') initQuiz();
     }
 
+        // ================================================================
+    //  21. EVENT LISTENER FOR VOCAB FILTER
     // ================================================================
-    //  21. START
+    document.getElementById('vocabTypeFilter')?.addEventListener('change', applyVocabFilter);
+    document.getElementById('vocabSearchFilter')?.addEventListener('input', applyVocabFilter);
+
+    // ================================================================
+    //  22. START
     // ================================================================
     loadData();
 </script>
