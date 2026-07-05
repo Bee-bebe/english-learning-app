@@ -1161,7 +1161,7 @@
                     fetch(FAVORITES_URL)
                 ]);
 
-                if (!storiesResp.ok) throw new Error('โหลดเรื่องสั้นไม่สำเร็จ');
+                                if (!storiesResp.ok) throw new Error('โหลดเรื่องสั้นไม่สำเร็จ');
 
                 const storiesCSV = await storiesResp.text();
                 const storiesRows = parseCSV(storiesCSV);
@@ -1174,6 +1174,7 @@
                     favoritesData = buildFavorites(favRows);
                 } else {
                     favoritesData = [];
+                }
                 }
 
                 storyCount.textContent = allStories.length;
