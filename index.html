@@ -1037,8 +1037,8 @@
         vocabList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
     }
 
-            // ================================================================
-    //  11. RENDER VERBS (กริยา 3 ช่อง)
+                // ================================================================
+    //  11. RENDER VERBS (กริยา 3 ช่อง) + เสียงทุกช่อง
     // ================================================================
     function renderVerbs(rows) {
         if (rows.length < 2) {
@@ -1069,31 +1069,31 @@
                 <thead>
                     <tr>
                         <th>ช่อง 1 (Base)</th>
+                        <th>🔊</th>
                         <th>ช่อง 2 (Past)</th>
+                        <th>🔊</th>
                         <th>ช่อง 3 (PP)</th>
+                        <th>🔊</th>
                         <th>ความหมาย</th>
                         <th>ตัวอย่าง</th>
-                        <th>🔊</th>
                     </tr>
                 </thead>
                 <tbody>${items.map(item => `
                     <tr>
                         <td><strong>${item.base}</strong></td>
+                        <td><button class="vocab-speaker-btn" onclick="speakWord('${item.base}', event)">🔊</button></td>
                         <td>${item.past || '-'}</td>
+                        <td>${item.past ? `<button class="vocab-speaker-btn" onclick="speakWord('${item.past}', event)">🔊</button>` : '-'}</td>
                         <td>${item.pp || '-'}</td>
+                        <td>${item.pp ? `<button class="vocab-speaker-btn" onclick="speakWord('${item.pp}', event)">🔊</button>` : '-'}</td>
                         <td>${item.meaning}</td>
                         <td>${item.example}</td>
-                        <td>
-                            <button class="vocab-speaker-btn" onclick="speakWord('${item.base}', event)">🔊</button>
-                            ${item.example && item.example !== '-' ? `<button class="vocab-speaker-btn" onclick="speakWord('${item.example.replace(/'/g, "\\'")}', event)" title="ฟังตัวอย่าง">📢</button>` : ''}
-                        </td>
                     </tr>
                 `).join('')}</tbody>
             </table>
         </div>`;
         verbList.innerHTML = html;
     }
-
     // ================================================================
     //  12. RENDER PHRASES (วลีสนทนา)
     // ================================================================
