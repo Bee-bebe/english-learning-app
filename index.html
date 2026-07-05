@@ -1037,8 +1037,8 @@
         vocabList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
     }
 
-    // ================================================================
-    //  11. RENDER VERBS (กริยา 3 ช่อง)
+        // ================================================================
+    //  11. RENDER VERBS (กริยา 3 ช่อง) + ตัวอย่าง
     // ================================================================
     function renderVerbs(rows) {
         if (rows.length < 2) {
@@ -1058,7 +1058,7 @@
                 past: get('past_simple'),
                 pp: get('past_participle'),
                 meaning: get('meaning'),
-                example: get('example')
+                example: get('example')  // ← เพิ่มบรรทัดนี้
             };
         }).filter(item => item.base && item.meaning);
 
@@ -1066,13 +1066,23 @@
 
         const html = `<div class="vocab-table-wrap">
             <table class="vocab-table">
-                <thead><tr><th>ช่อง 1 (Base)</th><th>ช่อง 2 (Past)</th><th>ช่อง 3 (PP)</th><th>ความหมาย</th><th>🔊</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>ช่อง 1 (Base)</th>
+                        <th>ช่อง 2 (Past)</th>
+                        <th>ช่อง 3 (PP)</th>
+                        <th>ความหมาย</th>
+                        <th>ตัวอย่าง</th>
+                        <th>🔊</th>
+                    </tr>
+                </thead>
                 <tbody>${items.map(item => `
                     <tr>
                         <td><strong>${item.base}</strong></td>
                         <td>${item.past || '-'}</td>
                         <td>${item.pp || '-'}</td>
                         <td>${item.meaning}</td>
+                        <td>${item.example || '-'}</td>
                         <td><button class="vocab-speaker-btn" onclick="speakWord('${item.base}', event)">🔊</button></td>
                     </tr>
                 `).join('')}</tbody>
