@@ -1388,6 +1388,11 @@
                     <span class="switch"></span>
                 </div>
                 <div class="translation-box ${showTranslation ? 'show' : ''}">
+    <div>${story.content}</div>
+    <div style="font-size:14px;color:var(--text-muted);margin-top:8px;border-top:1px dashed var(--border-color);padding-top:8px;">
+        💡 คำศัพท์สำคัญ: ${story.vocab.map(v => `${v.word} = ${v.meaning}`).join(' · ')}
+    </div>
+</div> ${showTranslation ? 'show' : ''}">
                     <div>${story.content}</div>
                     <div style="font-size:14px;color:var(--text-muted);margin-top:8px;border-top:1px dashed var(--border-color);padding-top:8px;">
                         💡 คำศัพท์สำคัญ: ${story.vocab.map(v => `${v.word} = ${v.meaning}`).join(' · ')}
