@@ -1064,7 +1064,7 @@
                     // ================================================================
     //  11. RENDER VERBS (กริยา 3 ช่อง) - คลิกที่คำเพื่อฟังเสียง
     // ================================================================
-    function renderVerbs(rows) {
+        function renderVerbs(rows) {
         if (rows.length < 2) {
             verbList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
             verbCount.textContent = '0';
@@ -1105,7 +1105,7 @@
                         <td class="clickable-word" onclick="speakWord('${item.past}', event)" title="คลิกเพื่อฟังเสียง">${item.past || '-'}</td>
                         <td class="clickable-word" onclick="speakWord('${item.pp}', event)" title="คลิกเพื่อฟังเสียง">${item.pp || '-'}</td>
                         <td>${item.meaning}</td>
-                        <td>${item.example}</td>
+                        <td class="clickable-word" onclick="speakWord('${item.example.replace(/'/g, "\\'")}', event)" title="คลิกเพื่อฟังเสียง">${item.example}</td>
                     </tr>
                 `).join('')}</tbody>
             </table>
