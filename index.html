@@ -1,329 +1,260 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌟 English Pro - ฝึกภาษาอังกฤษ</title>
     <style>
-        /* ===== CSS VARIABLES ===== */
-        :root {
-            --bg-primary: #f0f7ff;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --bg-card-alt: #f8fafc;
-            --text-primary: #0f172a;
-            --text-secondary: #334155;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 24px rgba(0, 20, 50, 0.08);
-            --radius: 20px;
-            --radius-sm: 12px;
-            --radius-full: 9999px;
-            --primary: #1e3a6f;
-            --primary-hover: #0f2a52;
-            --primary-light: #e8edf6;
-            --accent: #f59e0b;
-            --accent-light: #fef3c7;
-            --success: #10b981;
-            --danger: #ef4444;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font: 'Inter', 'Sarabun', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: #1e293b;
-            --bg-card-alt: #2d3a4f;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-            --primary-light: #2d3a4f;
-            --accent-light: #4a3a1a;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: var(--font);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background var(--transition), color var(--transition);
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f7ff;
+            color: #1e293b;
             padding: 16px;
-            line-height: 1.6;
+            transition: 0.3s;
         }
-
         .app {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
+        /* Dark Mode */
+        body.dark {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        body.dark .card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .card-alt {
+            background: #2d3a4f;
+        }
+        body.dark .header,
+        body.dark .tabs,
+        body.dark .main-content {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .story-content,
+        body.dark .translation-box,
+        body.dark .fav-vertical-item,
+        body.dark .all-vocab-item {
+            background: #2d3a4f;
+            border-color: #334155;
+        }
+        body.dark .story-content .highlight {
+            background: #4a3a1a;
+        }
+        body.dark .btn-speaker {
+            background: #3b5a8a;
+        }
+        body.dark .btn-speaker:hover {
+            background: #2a4a7a;
+        }
+        body.dark input,
+        body.dark select {
+            background: #2d3a4f;
+            color: #e2e8f0;
+            border-color: #334155;
+        }
+        body.dark .speed-btn {
+            background: #2d3a4f;
+            color: #e2e8f0;
+            border-color: #334155;
+        }
+        body.dark .speed-btn.active {
+            background: #3b5a8a;
+            border-color: #3b5a8a;
+            color: #fff;
+        }
+
+        /* Layout */
         .header {
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
-            padding: 20px 28px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 16px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            border: 1px solid var(--border-color);
-            transition: background var(--transition);
+            border: 1px solid #e2e8f0;
         }
         .header-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
-        .header-left .logo {
-            font-size: 30px;
-        }
-        .header-left h1 {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .header-left h1 span {
-            color: var(--primary);
-        }
+        .header-left .logo { font-size: 28px; }
+        .header-left h1 { font-size: 20px; font-weight: 700; }
+        .header-left h1 span { color: #1e3a6f; }
         .header-left .badge {
-            background: var(--primary);
+            background: #1e3a6f;
             color: #fff;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 2px 14px;
-            border-radius: var(--radius-full);
+            font-size: 11px;
+            padding: 2px 12px;
+            border-radius: 20px;
         }
         .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
-        .search-box {
-            position: relative;
-        }
         .search-box input {
-            padding: 8px 16px 8px 38px;
-            border-radius: var(--radius-full);
-            border: 2px solid var(--border-color);
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            padding: 6px 12px 6px 32px;
+            border-radius: 20px;
+            border: 2px solid #e2e8f0;
             font-size: 14px;
-            width: 200px;
             outline: none;
-            transition: var(--transition);
+            width: 180px;
+            transition: 0.3s;
         }
         .search-box input:focus {
-            border-color: var(--primary);
-            width: 260px;
+            border-color: #1e3a6f;
+            width: 220px;
         }
+        .search-box { position: relative; }
         .search-box .icon {
             position: absolute;
-            left: 12px;
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-        .theme-toggle {
-            background: var(--bg-primary);
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-full);
-            padding: 8px 16px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-primary);
-        }
-        .theme-toggle:hover {
-            border-color: var(--primary);
-        }
-        .theme-toggle .label {
-            font-size: 13px;
-            font-weight: 500;
+            color: #94a3b8;
         }
         .stats {
-            display: flex;
-            gap: 16px;
             font-size: 13px;
-            color: var(--text-muted);
-            background: var(--bg-primary);
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 20px;
         }
-        .stats span {
-            font-weight: 600;
-            color: var(--text-primary);
+        .stats span { font-weight: 600; color: #1e293b; }
+        .theme-toggle {
+            background: none;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 16px;
         }
+        body.dark .theme-toggle { border-color: #334155; }
 
-        /* ===== TABS (5 เมนู) ===== */
+        /* Tabs */
         .tabs {
             display: flex;
             gap: 4px;
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
+            background: #fff;
+            border-radius: 16px;
             padding: 6px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
             flex-wrap: wrap;
-            transition: background var(--transition);
         }
         .tab-btn {
-            padding: 10px 22px;
+            padding: 8px 18px;
             border: none;
-            border-radius: var(--radius-sm);
+            border-radius: 12px;
             background: transparent;
-            color: var(--text-secondary);
+            color: #64748b;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-family: var(--font);
+            gap: 6px;
             flex: 1 1 auto;
             justify-content: center;
         }
-        .tab-btn:hover {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-        }
-        .tab-btn.active {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(30, 58, 111, 0.3);
-        }
+        .tab-btn:hover { background: #f1f5f9; color: #1e293b; }
+        .tab-btn.active { background: #1e3a6f; color: #fff; }
         .tab-btn .count {
-            font-size: 12px;
-            background: rgba(255, 255, 255, 0.2);
+            font-size: 11px;
+            background: rgba(255,255,255,0.2);
             padding: 0 10px;
-            border-radius: var(--radius-full);
+            border-radius: 20px;
         }
-        .tab-btn.active .count {
-            background: rgba(255, 255, 255, 0.25);
-        }
+        .tab-btn.active .count { background: rgba(255,255,255,0.25); }
 
-        /* ===== MAIN CONTENT ===== */
+        /* Main */
         .main-content {
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
+            background: #fff;
+            border-radius: 16px;
             padding: 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            transition: background var(--transition);
-            min-height: 480px;
+            border: 1px solid #e2e8f0;
+            min-height: 400px;
         }
-        .tab-panel {
-            display: none;
-            animation: fadeIn 0.35s ease;
-        }
-        .tab-panel.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fade 0.3s; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ===== STORY GRID ===== */
+        /* Story Grid */
         .story-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 10px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
+            margin-bottom: 20px;
         }
-        .story-grid .story-btn {
-            padding: 12px 16px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            border-radius: var(--radius-sm);
+        .story-btn {
+            padding: 10px 14px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            transition: var(--transition);
-            color: var(--text-secondary);
+            transition: 0.3s;
+            color: #64748b;
             text-align: center;
-            font-family: var(--font);
         }
-        .story-grid .story-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        .story-grid .story-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: #fff;
-        }
-        .story-grid .story-btn .story-id {
-            font-size: 11px;
-            opacity: 0.6;
-            display: block;
-            font-weight: 400;
-            margin-top: 2px;
-        }
+        .story-btn:hover { border-color: #1e3a6f; transform: translateY(-2px); }
+        .story-btn.active { border-color: #1e3a6f; background: #1e3a6f; color: #fff; }
+        .story-btn .story-id { font-size: 11px; opacity: 0.6; display: block; font-weight: 400; }
 
-        /* ===== STORY DISPLAY ===== */
+        /* Story Display */
         .story-display {
-            background: var(--bg-card-alt);
-            border-radius: var(--radius-sm);
-            padding: 24px;
-            border-left: 5px solid var(--primary);
-            transition: background var(--transition);
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #1e3a6f;
         }
         .story-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .story-title .story-id-badge {
             font-size: 13px;
-            background: var(--primary-light);
+            background: #e2e8f0;
             padding: 0 14px;
-            border-radius: var(--radius-full);
+            border-radius: 20px;
             font-weight: 600;
-            color: var(--primary);
+            color: #1e3a6f;
         }
         .story-content {
-            font-size: 18px;
-            line-height: 2;
-            background: var(--bg-card);
-            padding: 20px 24px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            transition: background var(--transition);
-            margin-bottom: 16px;
+            font-size: 17px;
+            line-height: 1.9;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 14px;
         }
         .story-content .highlight {
-            background: var(--accent-light);
+            background: #fef3c7;
             padding: 0 4px;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: help;
             font-weight: 500;
         }
@@ -333,1717 +264,1117 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            color: var(--text-secondary);
+            color: #64748b;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
             width: fit-content;
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            transition: var(--transition);
+            transition: 0.3s;
         }
-        .translation-toggle:hover {
-            border-color: var(--primary);
-        }
+        .translation-toggle:hover { border-color: #1e3a6f; }
         .translation-toggle .switch {
-            width: 40px;
-            height: 22px;
-            background: var(--border-color);
+            width: 36px;
+            height: 20px;
+            background: #e2e8f0;
             border-radius: 20px;
             position: relative;
-            transition: var(--transition);
+            transition: 0.3s;
         }
         .translation-toggle .switch::after {
             content: '';
             position: absolute;
-            width: 18px;
-            height: 18px;
-            background: white;
+            width: 16px;
+            height: 16px;
+            background: #fff;
             border-radius: 50%;
             top: 2px;
             left: 2px;
-            transition: var(--transition);
+            transition: 0.3s;
         }
-        .translation-toggle.active .switch {
-            background: var(--primary);
-        }
-        .translation-toggle.active .switch::after {
-            left: 20px;
-        }
+        .translation-toggle.active .switch { background: #1e3a6f; }
+        .translation-toggle.active .switch::after { left: 18px; }
         .translation-box {
-            background: var(--bg-card);
-            padding: 16px 20px;
-            border-radius: var(--radius-sm);
-            border: 2px dashed var(--accent);
-            font-size: 17px;
-            line-height: 2;
-            color: var(--text-secondary);
+            background: #fff;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px dashed #f59e0b;
+            font-size: 16px;
+            line-height: 1.9;
+            color: #334155;
             display: none;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
-        .translation-box.show {
-            display: block;
-        }
+        .translation-box.show { display: block; }
 
         /* Audio */
         .audio-controls {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
-            background: var(--bg-card);
-            padding: 12px 18px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
-            margin-bottom: 16px;
+            gap: 10px;
+            background: #fff;
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 14px;
         }
         .btn-speaker {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 22px;
-            background: var(--primary);
+            padding: 8px 20px;
+            background: #1e3a6f;
             color: #fff;
             border: none;
-            border-radius: var(--radius-full);
+            border-radius: 30px;
             cursor: pointer;
             font-size: 15px;
             font-weight: 600;
-            transition: var(--transition);
-            font-family: var(--font);
+            transition: 0.3s;
         }
-        .btn-speaker:hover {
-            background: var(--primary-hover);
-            transform: scale(1.02);
-        }
-        .btn-speaker.speaking {
-            background: var(--danger);
-            animation: pulse 0.9s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .btn-speaker svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
+        .btn-speaker:hover { background: #0f2a52; transform: scale(1.02); }
+        .btn-speaker.speaking { background: #dc2626; animation: pulse 0.8s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
         .speed-group {
             display: flex;
             align-items: center;
             gap: 4px;
             margin-left: auto;
         }
-        .speed-group label {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
+        .speed-group label { font-size: 13px; color: #94a3b8; }
         .speed-btn {
             padding: 4px 12px;
-            border-radius: var(--radius-full);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
+            border-radius: 20px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
-            transition: var(--transition);
-            color: var(--text-secondary);
-            font-family: var(--font);
+            transition: 0.3s;
+            color: #64748b;
         }
-        .speed-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: #fff;
-        }
-        .status-text {
-            font-size: 13px;
-            color: var(--text-muted);
-            min-width: 80px;
-            text-align: center;
-        }
+        .speed-btn.active { border-color: #1e3a6f; background: #1e3a6f; color: #fff; }
+        .status-text { font-size: 13px; color: #94a3b8; min-width: 70px; text-align: center; }
 
-        /* ===== VOCAB TABLE ===== */
-        .vocab-section {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 2px dashed var(--border-color);
-        }
-        .vocab-section h3 {
-            color: var(--text-primary);
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .vocab-table-wrap {
-            overflow-x: auto;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-        }
-        .vocab-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 15px;
-            min-width: 400px;
-        }
-        .vocab-table th {
-            background: var(--primary);
-            color: #fff;
-            padding: 10px 14px;
-            text-align: left;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .vocab-table td {
-            padding: 8px 14px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-        .vocab-table tr:nth-child(even) td {
-            background: var(--bg-card-alt);
-        }
-        .vocab-table .type-badge {
-            display: inline-block;
-            background: var(--primary-light);
-            padding: 2px 12px;
-            border-radius: var(--radius-full);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--primary);
-        }
-        .vocab-speaker-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            transition: var(--transition);
-            padding: 4px 8px;
-            color: var(--primary);
-            border-radius: var(--radius-full);
-        }
-        .vocab-speaker-btn:hover {
-            background: var(--primary-light);
-            transform: scale(1.1);
-        }
+        /* Vocab Table */
+        .vocab-section { margin-top: 14px; padding-top: 14px; border-top: 2px dashed #e2e8f0; }
+        .vocab-section h3 { font-size: 17px; margin-bottom: 10px; }
+        .vocab-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .vocab-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 350px; }
+        .vocab-table th { background: #1e3a6f; color: #fff; padding: 8px 14px; text-align: left; font-size: 13px; }
+        .vocab-table td { padding: 8px 14px; border-bottom: 1px solid #e2e8f0; }
+        .vocab-table tr:nth-child(even) td { background: #f8fafc; }
+        .vocab-table .type-badge { display: inline-block; background: #e2e8f0; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #1e3a6f; }
+        .vocab-speaker-btn { background: none; border: none; cursor: pointer; font-size: 18px; padding: 4px 8px; color: #1e3a6f; border-radius: 20px; transition: 0.3s; }
+        .vocab-speaker-btn:hover { background: #e2e8f0; }
 
-        /* ===== FAVORITES - VERTICAL LIST ===== */
-        .fav-vertical-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 600px;
-            overflow-y: auto;
-            padding-right: 6px;
-        }
-        .fav-vertical-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 16px 20px;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .fav-vertical-item:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-        .fav-vertical-item .row-top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .fav-vertical-item .row-top .word {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .fav-vertical-item .row-top .type-badge {
-            display: inline-block;
-            background: var(--primary-light);
-            padding: 2px 14px;
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-        }
-        .fav-vertical-item .row-top .meaning {
-            font-size: 17px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        .fav-vertical-item .row-top .actions {
-            display: flex;
-            gap: 6px;
-            margin-left: auto;
-            align-items: center;
-        }
-        .fav-vertical-item .row-detail {
-            font-size: 14px;
-            color: var(--text-muted);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding-top: 4px;
-            border-top: 1px dashed var(--border-color);
-            margin-top: 4px;
-        }
-        .fav-vertical-item .row-detail .example {
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        .fav-vertical-item .row-detail .category {
-            background: var(--bg-primary);
-            padding: 0 10px;
-            border-radius: var(--radius-full);
-            font-size: 12px;
-        }
-        .fav-vertical-item .row-detail .note {
-            background: var(--accent-light);
-            padding: 0 10px;
-            border-radius: var(--radius-full);
-            font-size: 12px;
-        }
-        .fav-vertical-item .row-detail .date {
-            font-size: 12px;
-        }
+        /* Favorites - Vertical List */
+        .fav-vertical-list { display: flex; flex-direction: column; gap: 10px; max-height: 600px; overflow-y: auto; padding-right: 4px; }
+        .fav-vertical-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; transition: 0.3s; display: flex; flex-direction: column; gap: 4px; }
+        .fav-vertical-item:hover { border-color: #1e3a6f; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .fav-vertical-item .row-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .fav-vertical-item .row-top .word { font-size: 18px; font-weight: 700; }
+        .fav-vertical-item .row-top .type-badge { display: inline-block; background: #e2e8f0; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #1e3a6f; }
+        .fav-vertical-item .row-top .meaning { font-size: 16px; color: #475569; }
+        .fav-vertical-item .row-top .actions { display: flex; gap: 6px; margin-left: auto; align-items: center; }
+        .fav-vertical-item .row-detail { font-size: 13px; color: #94a3b8; display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; border-top: 1px dashed #e2e8f0; margin-top: 4px; }
+        .fav-vertical-item .row-detail .example { color: #475569; font-style: italic; }
+        .fav-vertical-item .row-detail .category { background: #f1f5f9; padding: 0 10px; border-radius: 20px; font-size: 12px; }
+        .fav-vertical-item .row-detail .note { background: #fef3c7; padding: 0 10px; border-radius: 20px; font-size: 12px; }
+        .fav-vertical-item .row-detail .date { font-size: 12px; }
 
-        .fav-group {
-            margin-bottom: 24px;
-        }
-        .fav-group .group-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 12px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .fav-group .group-title .group-count {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-            background: var(--bg-card-alt);
-            padding: 0 12px;
-            border-radius: var(--radius-full);
-        }
+        .fav-group { margin-bottom: 20px; }
+        .fav-group .group-title { font-size: 17px; font-weight: 700; color: #1e3a6f; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e2e8f0; display: flex; align-items: center; gap: 10px; }
+        .fav-group .group-title .group-count { font-size: 13px; font-weight: 500; color: #94a3b8; background: #f1f5f9; padding: 0 12px; border-radius: 20px; }
 
-        .favorites-empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-        .favorites-empty .big-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
+        .favorites-empty { text-align: center; padding: 40px 20px; color: #94a3b8; }
+        .favorites-empty .big-icon { font-size: 48px; margin-bottom: 12px; }
 
-        /* ===== ALL VOCAB GRID ===== */
-        .all-vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .all-vocab-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            transition: var(--transition);
-        }
-        .all-vocab-item:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-        .all-vocab-item .word {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .all-vocab-item .type {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-        .all-vocab-item .meaning {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-        .all-vocab-item .from-story {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 6px;
-            border-top: 1px dashed var(--border-color);
-            padding-top: 6px;
-        }
+        /* All Vocab Grid */
+        .all-vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; max-height: 500px; overflow-y: auto; padding-right: 4px; }
+        .all-vocab-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; transition: 0.3s; }
+        .all-vocab-item:hover { border-color: #1e3a6f; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .all-vocab-item .word { font-size: 15px; font-weight: 700; }
+        .all-vocab-item .type { font-size: 12px; color: #94a3b8; }
+        .all-vocab-item .meaning { font-size: 14px; color: #475569; margin-top: 4px; }
+        .all-vocab-item .from-story { font-size: 11px; color: #94a3b8; margin-top: 6px; border-top: 1px dashed #e2e8f0; padding-top: 6px; }
 
-        /* ===== ADD WORD FORM ===== */
-        .add-word-form {
-            background: var(--bg-card-alt);
-            border-radius: var(--radius-sm);
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 24px;
-        }
-        .add-word-form h2 {
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-        .add-word-form .sub {
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-        .form-group {
-            margin-bottom: 14px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 15px;
-            font-family: var(--font);
-            outline: none;
-            transition: var(--transition);
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: var(--primary);
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        .btn-submit {
-            padding: 12px 32px;
-            border-radius: var(--radius-full);
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .btn-submit:hover {
-            background: var(--primary-hover);
-            transform: scale(1.02);
-        }
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+        /* Add Word Form */
+        .add-word-form { background: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .add-word-form h2 { margin-bottom: 4px; }
+        .add-word-form .sub { color: #94a3b8; margin-bottom: 14px; font-size: 14px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+        .form-group input, .form-group select { width: 100%; padding: 8px 12px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 14px; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: #1e3a6f; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-submit { padding: 10px 28px; border-radius: 30px; border: none; background: #1e3a6f; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { background: #0f2a52; transform: scale(1.02); }
 
-        /* ===== QUIZ ===== */
-        .quiz-container {
-            text-align: center;
-            padding: 20px 0;
-        }
-        .quiz-question {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-        .quiz-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            max-width: 600px;
-            margin: 0 auto 20px;
-        }
-        .quiz-options button {
-            padding: 14px 20px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--transition);
-            font-family: var(--font);
-            color: var(--text-primary);
-        }
-        .quiz-options button:hover {
-            border-color: var(--primary);
-        }
-        .quiz-options button.correct {
-            border-color: var(--success);
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .quiz-options button.wrong {
-            border-color: var(--danger);
-            background: #fecaca;
-            color: #991b1b;
-        }
-        .quiz-options button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        .quiz-result {
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-        .quiz-next-btn {
-            padding: 10px 32px;
-            border-radius: var(--radius-full);
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-            margin-top: 12px;
-        }
-        .quiz-next-btn:hover {
-            background: var(--primary-hover);
-        }
+        /* Quiz */
+        .quiz-container { text-align: center; padding: 20px 0; }
+        .quiz-question { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+        .quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; max-width: 500px; margin: 0 auto 16px; }
+        .quiz-options button { padding: 12px 16px; border-radius: 12px; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; font-size: 15px; font-weight: 500; transition: 0.3s; }
+        .quiz-options button:hover { border-color: #1e3a6f; }
+        .quiz-options button.correct { border-color: #22c55e; background: #dcfce7; color: #166534; }
+        .quiz-options button.wrong { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
+        .quiz-options button:disabled { cursor: not-allowed; opacity: 0.7; }
+        .quiz-result { font-size: 17px; font-weight: 600; margin-top: 10px; min-height: 30px; }
+        .quiz-next-btn { padding: 8px 28px; border-radius: 30px; border: none; background: #1e3a6f; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .quiz-next-btn:hover { background: #0f2a52; }
 
-        /* ===== LOADING ===== */
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-        }
-        .loading .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 16px;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .error {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--danger);
-        }
-        .error small {
-            display: block;
-            margin-top: 8px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
+        .loading { text-align: center; padding: 40px 20px; color: #94a3b8; }
+        .loading .spinner { width: 36px; height: 36px; border: 4px solid #e2e8f0; border-top-color: #1e3a6f; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error { text-align: center; padding: 30px 20px; color: #dc2626; }
+        .error small { display: block; margin-top: 6px; color: #94a3b8; font-size: 13px; }
 
-        /* ===== SHORTCUTS ===== */
-        .shortcuts-hint {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-color);
-        }
-        .shortcuts-hint kbd {
-            background: var(--bg-primary);
-            padding: 2px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            border: 1px solid var(--border-color);
-            font-family: var(--font);
-        }
+        .shortcuts-hint { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid #e2e8f0; }
+        .shortcuts-hint kbd { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-size: 11px; border: 1px solid #e2e8f0; }
 
-        /* ===== RESPONSIVE ===== */
+        /* Responsive */
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .header { flex-direction: column; align-items: stretch; }
+            .header { flex-direction: column; align-items: stretch; padding: 14px 16px; }
             .header-right { flex-direction: column; align-items: stretch; }
             .search-box input { width: 100%; }
             .search-box input:focus { width: 100%; }
             .tabs { flex-wrap: wrap; }
-            .tab-btn { font-size: 13px; padding: 8px 14px; flex: 1 1 auto; }
-            .main-content { padding: 16px; }
-            .story-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-            .story-content { font-size: 16px; padding: 14px; }
-            .audio-controls { border-radius: var(--radius-sm); flex-direction: column; align-items: stretch; }
+            .tab-btn { font-size: 13px; padding: 6px 12px; flex: 1 1 auto; }
+            .main-content { padding: 14px; }
+            .story-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .story-content { font-size: 15px; padding: 12px 14px; }
+            .audio-controls { flex-direction: column; align-items: stretch; border-radius: 16px; }
             .btn-speaker { justify-content: center; }
             .speed-group { margin-left: 0; justify-content: center; }
             .form-row { grid-template-columns: 1fr; }
+            .all-vocab-grid { grid-template-columns: 1fr 1fr; }
             .fav-vertical-item .row-top { flex-direction: column; align-items: flex-start; }
             .fav-vertical-item .row-top .actions { margin-left: 0; align-self: flex-start; }
-            .all-vocab-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
             .story-grid { grid-template-columns: 1fr 1fr; }
-            .story-grid .story-btn { font-size: 12px; padding: 8px 10px; }
             .all-vocab-grid { grid-template-columns: 1fr; }
             .quiz-options { grid-template-columns: 1fr; }
-            .fav-vertical-item { padding: 12px 14px; }
-            .fav-vertical-item .row-top .word { font-size: 18px; }
+            .fav-vertical-item { padding: 10px 14px; }
+            .story-content { font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="app" id="app">
+<div class="app" id="app">
 
-        <!-- HEADER -->
-        <header class="header">
-            <div class="header-left">
-                <span class="logo">🌟</span>
-                <h1>English <span>Pro</span></h1>
-                <span class="badge">BETA</span>
-            </div>
-            <div class="header-right">
-                <div class="search-box">
-                    <span class="icon">🔍</span>
-                    <input type="text" id="globalSearch" placeholder="ค้นหา..." />
-                </div>
-                <div class="stats">
-                    📚 <span id="totalWords">0</span> คำ
-                </div>
-                <button class="theme-toggle" id="themeToggle">
-                    <span id="themeIcon">🌙</span>
-                    <span class="label" id="themeLabel">มืด</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- TABS (5 เมนู) -->
-        <nav class="tabs" id="tabNav">
-            <button class="tab-btn active" data-tab="stories">📖 เรื่องสั้น <span class="count" id="storyCount">0</span></button>
-            <button class="tab-btn" data-tab="vocab">📚 คำศัพท์ทั้งหมด <span class="count" id="vocabCount">0</span></button>
-            <button class="tab-btn" data-tab="favorites">⭐ คำที่ชอบ <span class="count" id="favCount">0</span></button>
-            <button class="tab-btn" data-tab="addword">📝 เพิ่มคำศัพท์</button>
-            <button class="tab-btn" data-tab="quiz">🧠 ทดสอบ</button>
-        </nav>
-
-        <!-- MAIN -->
-        <main class="main-content">
-
-            <!-- TAB: STORIES -->
-            <section class="tab-panel active" id="panel-stories">
-                <div class="story-grid" id="storyGrid"></div>
-                <div class="story-display" id="storyDisplay">
-                    <div class="loading"><div class="spinner"></div>กำลังโหลด...</div>
-                </div>
-                <div class="shortcuts-hint">
-                    ⌨️ <kbd>Space</kbd> เล่น/หยุด · <kbd>→</kbd> เรื่องถัดไป · <kbd>←</kbd> เรื่องก่อน · <kbd>T</kbd> แปล
-                </div>
-            </section>
-
-            <!-- TAB: ALL VOCAB -->
-            <section class="tab-panel" id="panel-vocab">
-                <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;align-items:center;">
-                    <select id="vocabTypeFilter" style="padding:8px 14px;border-radius:var(--radius-full);border:2px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:14px;font-family:var(--font);">
-                        <option value="all">ทั้งหมด</option>
-                        <option value="noun">Noun</option>
-                        <option value="verb">Verb</option>
-                        <option value="adjective">Adjective</option>
-                        <option value="adverb">Adverb</option>
-                        <option value="phrasal verb">Phrasal Verb</option>
-                    </select>
-                    <input type="text" id="vocabSearchFilter" placeholder="ค้นหาคำศัพท์..." style="flex:1;padding:8px 14px;border-radius:var(--radius-full);border:2px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:14px;font-family:var(--font);outline:none;min-width:150px;" />
-                </div>
-                <div class="all-vocab-grid" id="allVocabGrid">
-                    <div class="loading">กำลังโหลด...</div>
-                </div>
-            </section>
-
-            <!-- TAB: FAVORITES -->
-            <section class="tab-panel" id="panel-favorites">
-                <div id="favoritesContainer">
-                    <div class="loading">กำลังโหลด...</div>
-                </div>
-            </section>
-
-            <!-- TAB: ADD WORD -->
-            <section class="tab-panel" id="panel-addword">
-                <div class="add-word-form">
-                    <h2>📝 เพิ่มคำศัพท์ในคลังส่วนตัว</h2>
-                    <p class="sub">เพิ่มคำศัพท์ที่คุณอยากเก็บไว้ทบทวน</p>
-                    <form id="addWordForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>คำศัพท์ (ภาษาอังกฤษ) *</label>
-                                <input type="text" id="newWord" placeholder="เช่น beautiful" required />
-                            </div>
-                            <div class="form-group">
-                                <label>ชนิดของคำ *</label>
-                                <select id="newType" required>
-                                    <option value="">เลือก...</option>
-                                    <option value="noun">Noun</option>
-                                    <option value="verb">Verb</option>
-                                    <option value="adjective">Adjective</option>
-                                    <option value="adverb">Adverb</option>
-                                    <option value="phrasal verb">Phrasal Verb</option>
-                                    <option value="preposition">Preposition</option>
-                                    <option value="conjunction">Conjunction</option>
-                                    <option value="interjection">Interjection</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>คำแปลภาษาไทย *</label>
-                            <input type="text" id="newMeaning" placeholder="เช่น สวยงาม" required />
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>ประโยคตัวอย่าง</label>
-                                <input type="text" id="newExample" placeholder="เช่น She is beautiful." />
-                            </div>
-                            <div class="form-group">
-                                <label>หมวดหมู่</label>
-                                <input type="text" id="newCategory" placeholder="เช่น การทำงาน, ชีวิตประจำวัน" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>หมายเหตุ</label>
-                            <input type="text" id="newNote" placeholder="เช่น ศัพท์สอบ TOEIC" />
-                        </div>
-                        <button type="submit" class="btn-submit">➕ เพิ่มคำศัพท์</button>
-                    </form>
-                    <div id="addResult" style="margin-top:16px;"></div>
-                </div>
-
-                <h3 style="color:var(--text-primary);margin-bottom:12px;">📚 คำศัพท์ที่คุณเพิ่มเอง</h3>
-                <div id="myVocabList" class="fav-vertical-list">
-                    <div class="loading">กำลังโหลด...</div>
-                </div>
-            </section>
-
-            <!-- TAB: QUIZ -->
-            <section class="tab-panel" id="panel-quiz">
-                <div class="quiz-container" id="quizContainer">
-                    <div class="loading"><div class="spinner"></div>กำลังเตรียม...</div>
-                </div>
-            </section>
-
-        </main>
-
-        <div class="shortcuts-hint" style="border-top:none;padding-top:8px;">
-            🇹🇭 เรียนภาษาอังกฤษอย่างมืออาชีพ · พัฒนาด้วย Google Sheets
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <span class="logo">🌟</span>
+            <h1>English <span>Pro</span></h1>
+            <span class="badge">BETA</span>
         </div>
-    </div>
+        <div class="header-right">
+            <div class="search-box">
+                <span class="icon">🔍</span>
+                <input type="text" id="globalSearch" placeholder="ค้นหา..." />
+            </div>
+            <div class="stats">📚 <span id="totalWords">0</span> คำ</div>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </header>
 
-    <script>
-        // ================================================================
-        //  1. CONFIG
-        // ================================================================
-        const SHEET_ID = '13PC7nCFwM02IsZlBjgvOfHWiw-qizrW72z5LM0zZOU4';
+    <!-- TABS -->
+    <nav class="tabs" id="tabNav">
+        <button class="tab-btn active" data-tab="stories">📖 เรื่องสั้น <span class="count" id="storyCount">0</span></button>
+        <button class="tab-btn" data-tab="vocab">📚 คำศัพท์ทั้งหมด <span class="count" id="vocabCount">0</span></button>
+        <button class="tab-btn" data-tab="favorites">⭐ คำที่ชอบ <span class="count" id="favCount">0</span></button>
+        <button class="tab-btn" data-tab="addword">📝 เพิ่มคำศัพท์</button>
+        <button class="tab-btn" data-tab="quiz">🧠 ทดสอบ</button>
+    </nav>
 
-        const STORIES_URL =
-            `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=stories`;
-        const FAVORITES_URL =
-            `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=favorites`;
+    <!-- MAIN -->
+    <main class="main-content">
 
-        // ================================================================
-        //  2. STATE
-        // ================================================================
-        let allStories = [];
-        let allVocab = [];
-        let favoritesData = [];
-        let currentStoryId = null;
-        let currentSentenceIndex = -1;
-        let isLoop = false;
-        let currentSpeed = 1.0;
-        let currentVolume = 1.0;
-        let showTranslation = false;
+        <!-- TAB: STORIES -->
+        <section class="tab-panel active" id="panel-stories">
+            <div class="story-grid" id="storyGrid"></div>
+            <div class="story-display" id="storyDisplay">
+                <div class="loading"><div class="spinner"></div>กำลังโหลด...</div>
+            </div>
+            <div class="shortcuts-hint">⌨️ <kbd>Space</kbd> เล่น/หยุด · <kbd>→</kbd> เรื่องถัดไป · <kbd>←</kbd> เรื่องก่อน · <kbd>T</kbd> แปล</div>
+        </section>
 
-        const speech = window.speechSynthesis;
-        let currentUtterance = null;
-        let isSpeaking = false;
-        let speechTimer = null;
+        <!-- TAB: ALL VOCAB -->
+        <section class="tab-panel" id="panel-vocab">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
+                <select id="vocabTypeFilter" style="padding:6px 12px;border-radius:20px;border:2px solid #e2e8f0;font-size:13px;">
+                    <option value="all">ทั้งหมด</option>
+                    <option value="noun">Noun</option>
+                    <option value="verb">Verb</option>
+                    <option value="adjective">Adjective</option>
+                    <option value="adverb">Adverb</option>
+                    <option value="phrasal verb">Phrasal Verb</option>
+                </select>
+                <input type="text" id="vocabSearchFilter" placeholder="ค้นหาคำศัพท์..." style="flex:1;padding:6px 12px;border-radius:20px;border:2px solid #e2e8f0;font-size:13px;outline:none;min-width:120px;" />
+            </div>
+            <div class="all-vocab-grid" id="allVocabGrid">
+                <div class="loading">กำลังโหลด...</div>
+            </div>
+        </section>
 
-        let quizQuestions = [];
-        let quizIndex = 0;
-        let quizScore = 0;
-        let quizAnswered = false;
+        <!-- TAB: FAVORITES -->
+        <section class="tab-panel" id="panel-favorites">
+            <div id="favoritesContainer"><div class="loading">กำลังโหลด...</div></div>
+        </section>
 
-        // ================================================================
-        //  3. DOM REFS
-        // ================================================================
-        const $ = id => document.getElementById(id);
-        const storyGrid = $('storyGrid');
-        const storyDisplay = $('storyDisplay');
-        const globalSearch = $('globalSearch');
-        const totalWords = $('totalWords');
-        const storyCount = $('storyCount');
-        const vocabCount = $('vocabCount');
-        const favCount = $('favCount');
-        const allVocabGrid = $('allVocabGrid');
-        const vocabTypeFilter = $('vocabTypeFilter');
-        const vocabSearchFilter = $('vocabSearchFilter');
-        const favoritesContainer = $('favoritesContainer');
-        const myVocabList = $('myVocabList');
-        const quizContainer = $('quizContainer');
-        const themeToggle = $('themeToggle');
-        const themeIcon = $('themeIcon');
-        const themeLabel = $('themeLabel');
+        <!-- TAB: ADD WORD -->
+        <section class="tab-panel" id="panel-addword">
+            <div class="add-word-form">
+                <h2>📝 เพิ่มคำศัพท์ในคลังส่วนตัว</h2>
+                <p class="sub">เพิ่มคำศัพท์ที่คุณอยากเก็บไว้ทบทวน</p>
+                <form id="addWordForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>คำศัพท์ (อังกฤษ) *</label>
+                            <input type="text" id="newWord" placeholder="beautiful" required />
+                        </div>
+                        <div class="form-group">
+                            <label>ชนิดของคำ *</label>
+                            <select id="newType" required>
+                                <option value="">เลือก...</option>
+                                <option value="noun">Noun</option>
+                                <option value="verb">Verb</option>
+                                <option value="adjective">Adjective</option>
+                                <option value="adverb">Adverb</option>
+                                <option value="phrasal verb">Phrasal Verb</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>คำแปลไทย *</label>
+                        <input type="text" id="newMeaning" placeholder="สวยงาม" required />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ประโยคตัวอย่าง</label>
+                            <input type="text" id="newExample" placeholder="She is beautiful." />
+                        </div>
+                        <div class="form-group">
+                            <label>หมวดหมู่</label>
+                            <input type="text" id="newCategory" placeholder="การทำงาน, ชีวิตประจำวัน" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>หมายเหตุ</label>
+                        <input type="text" id="newNote" placeholder="ศัพท์สอบ TOEIC" />
+                    </div>
+                    <button type="submit" class="btn-submit">➕ เพิ่มคำศัพท์</button>
+                </form>
+                <div id="addResult" style="margin-top:12px;"></div>
+            </div>
+            <h3 style="margin-bottom:10px;">📚 คำศัพท์ที่คุณเพิ่มเอง</h3>
+            <div id="myVocabList" class="fav-vertical-list"><div class="loading">กำลังโหลด...</div></div>
+        </section>
 
-        // ================================================================
-        //  4. THEME
-        // ================================================================
-        function initTheme() {
-            const saved = localStorage.getItem('engProTheme') || 'light';
-            document.documentElement.setAttribute('data-theme', saved);
-            updateThemeUI(saved);
-        }
+        <!-- TAB: QUIZ -->
+        <section class="tab-panel" id="panel-quiz">
+            <div class="quiz-container" id="quizContainer"><div class="loading"><div class="spinner"></div>กำลังเตรียม...</div></div>
+        </section>
 
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('engProTheme', next);
-            updateThemeUI(next);
-        }
+    </main>
 
-        function updateThemeUI(theme) {
-            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-            themeLabel.textContent = theme === 'dark' ? 'สว่าง' : 'มืด';
-        }
+    <div class="shortcuts-hint" style="border-top:none;padding-top:6px;">🇹🇭 เรียนภาษาอังกฤษอย่างมืออาชีพ · พัฒนาด้วย Google Sheets</div>
+</div>
 
-        themeToggle.addEventListener('click', toggleTheme);
-        initTheme();
+<script>
+    // ================================================================
+    //  1. CONFIG
+    // ================================================================
+    const SHEET_ID = '13PC7nCFwM02IsZlBjgvOfHWiw-qizrW72z5LM0zZOU4';
+    const STORIES_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=stories`;
+    const FAVORITES_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=favorites`;
 
-        // ================================================================
-        //  5. SPEECH UTILITY
-        // ================================================================
-        function speakWord(word, event) {
-            if (!word) return;
-            if (speech.speaking) speech.cancel();
+    // ================================================================
+    //  2. STATE
+    // ================================================================
+    let allStories = [];
+    let allVocab = [];
+    let favoritesData = [];
+    let currentStoryId = null;
+    let currentSentenceIndex = -1;
+    let currentSpeed = 1.0;
+    let showTranslation = false;
+    let isSpeaking = false;
+    let isLoop = false;
+    let currentUtterance = null;
+    let speechTimer = null;
+    let quizQuestions = [];
+    let quizIndex = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
 
-            const utterance = new SpeechSynthesisUtterance(word);
-            utterance.lang = 'en-US';
-            utterance.rate = Math.min(currentSpeed, 1.2);
-            utterance.pitch = 1.0;
-            utterance.volume = currentVolume;
+    const speech = window.speechSynthesis;
 
-            const btn = event?.target?.closest?.('.vocab-speaker-btn') || event?.target;
-            if (btn) {
-                btn.classList.add('speaking');
-                setTimeout(() => btn.classList.remove('speaking'), 1000);
+    // ================================================================
+    //  3. DOM REFS
+    // ================================================================
+    const $ = id => document.getElementById(id);
+    const storyGrid = $('storyGrid');
+    const storyDisplay = $('storyDisplay');
+    const globalSearch = $('globalSearch');
+    const totalWords = $('totalWords');
+    const storyCount = $('storyCount');
+    const vocabCount = $('vocabCount');
+    const favCount = $('favCount');
+    const allVocabGrid = $('allVocabGrid');
+    const vocabTypeFilter = $('vocabTypeFilter');
+    const vocabSearchFilter = $('vocabSearchFilter');
+    const favoritesContainer = $('favoritesContainer');
+    const myVocabList = $('myVocabList');
+    const quizContainer = $('quizContainer');
+    const themeToggle = $('themeToggle');
+
+    // ================================================================
+    //  4. THEME
+    // ================================================================
+    function initTheme() {
+        const saved = localStorage.getItem('engProTheme') || 'light';
+        if (saved === 'dark') document.body.classList.add('dark');
+        themeToggle.textContent = saved === 'dark' ? '☀️' : '🌙';
+    }
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const isDark = document.body.classList.contains('dark');
+        localStorage.setItem('engProTheme', isDark ? 'dark' : 'light');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+    });
+    initTheme();
+
+    // ================================================================
+    //  5. SPEAK WORD
+    // ================================================================
+    function speakWord(word, event) {
+        if (!word) return;
+        if (speech.speaking) speech.cancel();
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        utterance.rate = Math.min(currentSpeed, 1.2);
+        const btn = event?.target?.closest?.('.vocab-speaker-btn') || event?.target;
+        if (btn) { btn.classList.add('speaking'); setTimeout(() => btn.classList.remove('speaking'), 1000); }
+        utterance.onend = () => { if (btn) btn.classList.remove('speaking'); };
+        utterance.onerror = () => { if (btn) btn.classList.remove('speaking'); };
+        speech.speak(utterance);
+    }
+
+    // ================================================================
+    //  6. LOAD DATA
+    // ================================================================
+    async function loadData() {
+        try {
+            const [storiesResp, favResp] = await Promise.all([fetch(STORIES_URL), fetch(FAVORITES_URL)]);
+            if (!storiesResp.ok) throw new Error('โหลดเรื่องสั้นไม่สำเร็จ');
+
+            const storiesCSV = await storiesResp.text();
+            const storiesRows = parseCSV(storiesCSV);
+            allStories = buildStories(storiesRows);
+            allVocab = buildAllVocab(allStories);
+
+            if (favResp.ok) {
+                const favCSV = await favResp.text();
+                const favRows = parseCSV(favCSV);
+                favoritesData = buildFavorites(favRows);
+            } else {
+                favoritesData = [];
             }
 
-            utterance.onend = () => { if (btn) btn.classList.remove('speaking'); };
-            utterance.onerror = () => { if (btn) btn.classList.remove('speaking'); };
-            speech.speak(utterance);
+            storyCount.textContent = allStories.length;
+            vocabCount.textContent = allVocab.length;
+            totalWords.textContent = allVocab.length + favoritesData.length;
+            favCount.textContent = favoritesData.length;
+
+            renderStoryGrid();
+            renderAllVocab();
+            renderFavorites();
+            renderMyVocab();
+            initQuiz();
+
+            const lastId = localStorage.getItem('engProLastStory');
+            if (lastId && allStories.some(s => s.id === parseInt(lastId))) {
+                showStory(parseInt(lastId));
+            } else if (allStories.length) {
+                showStory(allStories[0].id);
+            }
+        } catch (err) {
+            console.error('Load error:', err);
+            storyDisplay.innerHTML = `<div class="error">❌ ${err.message}<br><small>ตรวจสอบการเผยแพร่ Sheet</small></div>`;
+            allVocabGrid.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+            favoritesContainer.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+            myVocabList.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+            quizContainer.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+        }
+    }
+
+    // ================================================================
+    //  7. PARSE CSV
+    // ================================================================
+    function parseCSV(text) {
+        const lines = text.split('\n').filter(line => line.trim() !== '');
+        return lines.map(line => {
+            const cols = [];
+            let cur = '', inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const ch = line[i];
+                if (ch === '"') inQuotes = !inQuotes;
+                else if (ch === ',' && !inQuotes) { cols.push(cur.trim()); cur = ''; }
+                else cur += ch;
+            }
+            cols.push(cur.trim());
+            return cols;
+        });
+    }
+
+    // ================================================================
+    //  8. BUILD STORIES (รองรับ thai_translation)
+    // ================================================================
+    function buildStories(rows) {
+        const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
+        const map = new Map();
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.length < header.length) continue;
+            const get = (key) => {
+                const idx = header.indexOf(key);
+                return (idx !== -1 && idx < row.length) ? row[idx] : '';
+            };
+            const id = parseInt(get('story_id')) || i;
+            const title = get('title') || `เรื่องที่ ${id}`;
+            const content = get('content') || '';
+            const thaiTranslation = get('thai_translation') || '';
+            const word = get('vocab_word');
+            const type = get('vocab_type');
+            const meaning = get('vocab_meaning');
+            if (!map.has(id)) {
+                map.set(id, { id, title, content, thaiTranslation, vocab: [] });
+            }
+            if (word && type && meaning) {
+                map.get(id).vocab.push({ word, type, meaning });
+            }
+        }
+        return Array.from(map.values());
+    }
+
+    // ================================================================
+    //  9. BUILD ALL VOCAB
+    // ================================================================
+    function buildAllVocab(stories) {
+        const result = [];
+        stories.forEach(s => {
+            s.vocab.forEach(v => {
+                result.push({ word: v.word, type: v.type, meaning: v.meaning, storyId: s.id, storyTitle: s.title, source: 'story' });
+            });
+        });
+        return result;
+    }
+
+    // ================================================================
+    //  10. BUILD FAVORITES
+    // ================================================================
+    function buildFavorites(rows) {
+        if (rows.length < 2) return [];
+        const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
+        const result = [];
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.length < header.length) continue;
+            const get = (key) => {
+                const idx = header.indexOf(key);
+                return (idx !== -1 && idx < row.length) ? row[idx] : '';
+            };
+            const id = parseInt(get('id')) || i;
+            const word = get('word');
+            const type = get('type');
+            const meaning = get('meaning');
+            const example = get('example');
+            const category = get('category');
+            const note = get('note');
+            const date_added = get('date_added');
+            if (word && type && meaning) {
+                result.push({ id, word, type, meaning, example, category, note, date_added, source: 'favorite', storyTitle: 'คลังส่วนตัว' });
+            }
+        }
+        return result;
+    }
+
+    // ================================================================
+    //  11. RENDER STORY GRID
+    // ================================================================
+    function renderStoryGrid(filter = '') {
+        const search = filter.toLowerCase().trim();
+        let filtered = allStories;
+        if (search) {
+            filtered = allStories.filter(s =>
+                s.title.toLowerCase().includes(search) ||
+                s.content.toLowerCase().includes(search) ||
+                s.vocab.some(v => v.word.toLowerCase().includes(search) || v.meaning.includes(search))
+            );
+        }
+        storyGrid.innerHTML = '';
+        if (!filtered.length) {
+            storyGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:20px;">ไม่พบเรื่อง</div>`;
+            return;
+        }
+        filtered.forEach(s => {
+            const btn = document.createElement('button');
+            btn.className = 'story-btn' + (s.id === currentStoryId ? ' active' : '');
+            btn.innerHTML = `${s.title} <span class="story-id">#${s.id}</span>`;
+            btn.onclick = () => { stopSpeaking(); showStory(s.id); };
+            storyGrid.appendChild(btn);
+        });
+    }
+
+    // ================================================================
+    //  12. SHOW STORY
+    // ================================================================
+    function showStory(id) {
+        currentStoryId = id;
+        localStorage.setItem('engProLastStory', id);
+        const story = allStories.find(s => s.id === id);
+        if (!story) return;
+
+        document.querySelectorAll('.story-grid .story-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.textContent.match(/#(\d+)/)?.[1]) === id);
+        });
+
+        let highlighted = story.content;
+        story.vocab.forEach(v => {
+            const safe = v.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            highlighted = highlighted.replace(new RegExp(`\\b${safe}\\b`, 'gi'), match =>
+                `<span class="highlight" title="${v.type}: ${v.meaning}">${match}</span>`
+            );
+        });
+
+        let vocabHTML = '';
+        if (story.vocab.length) {
+            const rows = story.vocab.map(v => `
+                <tr>
+                    <td><strong>${v.word}</strong></td>
+                    <td><span class="type-badge">${v.type}</span></td>
+                    <td>${v.meaning}</td>
+                    <td><button class="vocab-speaker-btn" onclick="speakWord('${v.word}', event)">🔊</button></td>
+                </tr>
+            `).join('');
+            vocabHTML = `
+                <div class="vocab-section">
+                    <h3>📚 คำศัพท์ในเรื่องนี้</h3>
+                    <div class="vocab-table-wrap">
+                        <table class="vocab-table">
+                            <thead><tr><th>คำศัพท์</th><th>ชนิด</th><th>คำแปล</th><th>🔊</th></tr></thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
         }
 
-        // ================================================================
-        //  6. LOAD DATA
-        // ================================================================
-        async function loadData() {
-            try {
-                const [storiesResp, favResp] = await Promise.all([
-                    fetch(STORIES_URL),
-                    fetch(FAVORITES_URL)
-                ]);
+        const sentences = story.content.match(/[^.!?]+[.!?]+/g) || [story.content];
+        let sentenceHTML = `
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+                <button class="sentence-btn" data-sentence="-1" onclick="selectSentence(${story.id}, -1)" style="padding:4px 14px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600;">📄 ทั้งเรื่อง</button>
+                ${sentences.map((s, i) => `
+                    <button class="sentence-btn" data-sentence="${i}" onclick="selectSentence(${story.id}, ${i})" style="padding:4px 14px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:500;">${i+1}</button>
+                `).join('')}
+            </div>
+        `;
 
-                                if (!storiesResp.ok) throw new Error('โหลดเรื่องสั้นไม่สำเร็จ');
+        const transToggleHTML = `
+            <div class="translation-toggle ${showTranslation ? 'active' : ''}" onclick="toggleTranslation()">
+                <span>🇹🇭 แสดงคำแปล</span>
+                <span class="switch"></span>
+            </div>
+            <div class="translation-box ${showTranslation ? 'show' : ''}">
+                <div>${story.thaiTranslation || '⚠️ ยังไม่มีคำแปลสำหรับเรื่องนี้'}</div>
+                <div style="font-size:13px;color:#94a3b8;margin-top:6px;border-top:1px dashed #e2e8f0;padding-top:6px;">
+                    💡 คำศัพท์สำคัญ: ${story.vocab.map(v => `${v.word} = ${v.meaning}`).join(' · ')}
+                </div>
+            </div>
+        `;
 
-                const storiesCSV = await storiesResp.text();
-                const storiesRows = parseCSV(storiesCSV);
-                                allStories = buildStories(storiesRows);
-                allVocab = buildAllVocab(allStories);
+        storyDisplay.innerHTML = `
+            <div class="story-title">
+                <span>📖 ${story.title}</span>
+                <span class="story-id-badge">#${story.id}</span>
+            </div>
+            ${sentenceHTML}
+            <div class="story-content">${highlighted}</div>
+            ${transToggleHTML}
 
-                if (favResp.ok) {
-                    const favCSV = await favResp.text();
-                    const favRows = parseCSV(favCSV);
-                    favoritesData = buildFavorites(favRows);
+            <div class="audio-controls">
+                <button class="btn-speaker" id="speakerBtn">🔊 <span id="speakerLabel">ฟังเสียง</span></button>
+                <div class="speed-group">
+                    <label>🐢</label>
+                    <button class="speed-btn ${currentSpeed === 0.6 ? 'active' : ''}" data-speed="0.6">ช้า</button>
+                    <button class="speed-btn ${currentSpeed === 1.0 ? 'active' : ''}" data-speed="1.0">ปกติ</button>
+                    <button class="speed-btn ${currentSpeed === 1.4 ? 'active' : ''}" data-speed="1.4">เร็ว</button>
+                </div>
+                <span class="status-text" id="statusText">⏸ พร้อม</span>
+            </div>
+
+            ${vocabHTML}
+        `;
+
+        // Audio
+        const speakerBtn = document.getElementById('speakerBtn');
+        if (speakerBtn) {
+            speakerBtn.addEventListener('click', () => {
+                const text = getCurrentText(story);
+                toggleSpeech(text);
+            });
+        }
+
+        document.querySelectorAll('.speed-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentSpeed = parseFloat(this.dataset.speed);
+                if (currentUtterance) currentUtterance.rate = currentSpeed;
+            });
+        });
+
+        // Reset sentence
+        currentSentenceIndex = -1;
+        document.querySelectorAll('.sentence-btn').forEach(b => {
+            b.style.borderColor = '#e2e8f0';
+            b.style.background = '#fff';
+            b.style.color = '#64748b';
+            if (b.dataset.sentence === '-1') {
+                b.style.borderColor = '#1e3a6f';
+                b.style.background = '#1e3a6f';
+                b.style.color = '#fff';
+            }
+        });
+
+        // Keyboard
+        document.onkeydown = (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.key === ' ') { e.preventDefault(); toggleSpeech(getCurrentText(story)); }
+            if (e.key === 't' || e.key === 'T') toggleTranslation();
+            if (e.key === 'ArrowRight') {
+                const next = allStories.find(s => s.id > currentStoryId);
+                if (next) showStory(next.id);
+            }
+            if (e.key === 'ArrowLeft') {
+                const prev = allStories.filter(s => s.id < currentStoryId).pop();
+                if (prev) showStory(prev.id);
+            }
+        };
+    }
+
+    function getCurrentText(story) {
+        if (currentSentenceIndex >= 0) {
+            const sentences = story.content.match(/[^.!?]+[.!?]+/g) || [story.content];
+            if (currentSentenceIndex < sentences.length) return sentences[currentSentenceIndex];
+            return story.content;
+        }
+        return story.content;
+    }
+
+    function selectSentence(storyId, index) {
+        currentSentenceIndex = index;
+        const story = allStories.find(s => s.id === storyId);
+        if (!story) return;
+
+        document.querySelectorAll('.sentence-btn').forEach(b => {
+            b.style.borderColor = '#e2e8f0';
+            b.style.background = '#fff';
+            b.style.color = '#64748b';
+            if (parseInt(b.dataset.sentence) === index) {
+                b.style.borderColor = '#1e3a6f';
+                b.style.background = '#1e3a6f';
+                b.style.color = '#fff';
+            }
+        });
+
+        const sentences = story.content.match(/[^.!?]+[.!?]+/g) || [story.content];
+        let highlighted = story.content;
+        if (index >= 0 && index < sentences.length) {
+            const parts = [], fullText = story.content;
+            let pos = 0;
+            for (let i = 0; i < sentences.length; i++) {
+                const s = sentences[i];
+                const start = fullText.indexOf(s, pos);
+                if (start === -1) continue;
+                if (i === index) {
+                    parts.push(`<mark style="background:#fef3c7;padding:0 4px;border-radius:4px;">${s}</mark>`);
                 } else {
-                    favoritesData = [];
+                    parts.push(`<span style="opacity:0.3;font-size:0.9em;">${s}</span>`);
                 }
-
-                storyCount.textContent = allStories.length;
-                vocabCount.textContent = allVocab.length;
-                totalWords.textContent = allVocab.length + favoritesData.length;
-                favCount.textContent = favoritesData.length;
-                renderStoryGrid();
-                renderAllVocab();
-                renderFavorites();
-                renderMyVocab();
-                initQuiz();
-
-                const lastId = localStorage.getItem('engProLastStory');
-                if (lastId && allStories.some(s => s.id === parseInt(lastId))) {
-                    showStory(parseInt(lastId));
-                } else if (allStories.length) {
-                    showStory(allStories[0].id);
-                }
-
-            } catch (err) {
-                console.error('Load error:', err);
-                storyDisplay.innerHTML =
-                    `<div class="error">❌ ${err.message}<br><small>ตรวจสอบการเผยแพร่ Sheet</small></div>`;
-                favoritesContainer.innerHTML = `<div class="error">❌ ${err.message}</div>`;
-                myVocabList.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+                pos = start + s.length;
             }
-        }
-
-        // ================================================================
-        //  7. PARSE CSV
-        // ================================================================
-        function parseCSV(text) {
-            const lines = text.split('\n').filter(line => line.trim() !== '');
-            return lines.map(line => {
-                const cols = [];
-                let cur = '';
-                let inQuotes = false;
-                for (let i = 0; i < line.length; i++) {
-                    const ch = line[i];
-                    if (ch === '"') { inQuotes = !inQuotes; } else if (ch === ',' && !inQuotes) {
-                        cols.push(cur.trim());
-                        cur = '';
-                    } else { cur += ch; }
-                }
-                cols.push(cur.trim());
-                return cols;
-            });
-        }
-
-        // ================================================================
-        //  8. BUILD STORIES
-        // ================================================================
-                // ================================================================
-        //  8. BUILD STORIES
-        // ================================================================
-        function buildStories(rows) {
-            const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
-            const map = new Map();
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (row.length < header.length) continue;
-                const get = (key) => {
-                    const idx = header.indexOf(key);
-                    return (idx !== -1 && idx < row.length) ? row[idx] : '';
-                };
-                const id = parseInt(get('story_id')) || i;
-                const title = get('title') || `เรื่องที่ ${id}`;
-                const content = get('content') || '';
-                const thaiTranslation = get('thai_translation') || '';
-                const word = get('vocab_word');
-                const type = get('vocab_type');
-                const meaning = get('vocab_meaning');
-                if (!map.has(id)) {
-                    map.set(id, { id, title, content, thaiTranslation, vocab: [] });
-                }
-                if (word && type && meaning) {
-                    map.get(id).vocab.push({ word, type, meaning });
-                }
-            }
-            return Array.from(map.values());
-        }
-
-        // ================================================================
-        //  9. BUILD ALL VOCAB
-        // ================================================================
-        function buildAllVocab(stories) {
-            const result = [];
-            stories.forEach(s => {
-                s.vocab.forEach(v => {
-                    result.push({
-                        word: v.word,
-                        type: v.type,
-                        meaning: v.meaning,
-                        storyId: s.id,
-                        storyTitle: s.title,
-                        source: 'story'
-                    });
-                });
-            });
-            return result;
-        }
-
-        // ================================================================
-        //  10. BUILD FAVORITES
-        // ================================================================
-        function buildFavorites(rows) {
-            if (rows.length < 2) return [];
-            const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
-            const result = [];
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (row.length < header.length) continue;
-                const get = (key) => {
-                    const idx = header.indexOf(key);
-                    return (idx !== -1 && idx < row.length) ? row[idx] : '';
-                };
-                const id = parseInt(get('id')) || i;
-                const word = get('word');
-                const type = get('type');
-                const meaning = get('meaning');
-                const example = get('example');
-                const category = get('category');
-                const note = get('note');
-                const date_added = get('date_added');
-                if (word && type && meaning) {
-                    result.push({
-                        id,
-                        word,
-                        type,
-                        meaning,
-                        example,
-                        category,
-                        note,
-                        date_added,
-                        source: 'favorite',
-                        storyTitle: 'คลังส่วนตัว'
-                    });
-                }
-            }
-            return result;
-        }
-
-        function buildAllVocab(stories) {
-            const result = [];
-            stories.forEach(s => {
-                s.vocab.forEach(v => {
-                    result.push({ word: v.word, type: v.type, meaning: v.meaning, storyId: s.id, storyTitle: s
-                            .title, source: 'story' });
-                });
-            });
-            return result;
-        }
-
-        // ================================================================
-        //  9. BUILD FAVORITES
-        // ================================================================
-        function buildFavorites(rows) {
-            if (rows.length < 2) return [];
-            const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
-            const result = [];
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (row.length < header.length) continue;
-                const get = (key) => {
-                    const idx = header.indexOf(key);
-                    return (idx !== -1 && idx < row.length) ? row[idx] : '';
-                };
-                const id = parseInt(get('id')) || i;
-                const word = get('word');
-                const type = get('type');
-                const meaning = get('meaning');
-                const example = get('example');
-                const category = get('category');
-                const note = get('note');
-                const date_added = get('date_added');
-                if (word && type && meaning) {
-                    result.push({ id, word, type, meaning, example, category, note, date_added, source: 'favorite',
-                        storyTitle: 'คลังส่วนตัว' });
-                }
-            }
-            return result;
-        }
-
-        // ================================================================
-        //  10. RENDER STORY GRID
-        // ================================================================
-        function renderStoryGrid(filter = '') {
-            const search = filter.toLowerCase().trim();
-            let filtered = allStories;
-            if (search) {
-                filtered = allStories.filter(s =>
-                    s.title.toLowerCase().includes(search) ||
-                    s.content.toLowerCase().includes(search) ||
-                    s.vocab.some(v => v.word.toLowerCase().includes(search) || v.meaning.includes(search))
-                );
-            }
-            storyGrid.innerHTML = '';
-            if (!filtered.length) {
-                storyGrid.innerHTML =
-                    `<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:20px;">ไม่พบเรื่อง</div>`;
-                return;
-            }
-            filtered.forEach(s => {
-                const btn = document.createElement('button');
-                btn.className = 'story-btn' + (s.id === currentStoryId ? ' active' : '');
-                btn.innerHTML = `${s.title} <span class="story-id">#${s.id}</span>`;
-                btn.onclick = () => { stopSpeaking();
-                    showStory(s.id); };
-                storyGrid.appendChild(btn);
-            });
-        }
-
-        // ================================================================
-        //  11. SHOW STORY
-        // ================================================================
-        function showStory(id) {
-            currentStoryId = id;
-            localStorage.setItem('engProLastStory', id);
-            const story = allStories.find(s => s.id === id);
-            if (!story) return;
-
-            document.querySelectorAll('.story-grid .story-btn').forEach(btn => {
-                btn.classList.toggle('active', parseInt(btn.textContent.match(/#(\d+)/)?.[1]) === id);
-            });
-
-            let highlighted = story.content;
+            highlighted = parts.join(' ');
+        } else {
             story.vocab.forEach(v => {
                 const safe = v.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const regex = new RegExp(`\\b${safe}\\b`, 'gi');
-                highlighted = highlighted.replace(regex, match =>
+                highlighted = highlighted.replace(new RegExp(`\\b${safe}\\b`, 'gi'), match =>
                     `<span class="highlight" title="${v.type}: ${v.meaning}">${match}</span>`
                 );
             });
-
-            let vocabHTML = '';
-            if (story.vocab.length) {
-                const rows = story.vocab.map(v => `
-                    <tr>
-                        <td><strong>${v.word}</strong></td>
-                        <td><span class="type-badge">${v.type}</span></td>
-                        <td>${v.meaning}</td>
-                        <td>
-                            <button class="vocab-speaker-btn" onclick="speakWord('${v.word}', event)">🔊</button>
-                        </td>
-                    </tr>
-                `).join('');
-                vocabHTML = `
-                    <div class="vocab-section">
-                        <h3>📚 คำศัพท์ในเรื่องนี้</h3>
-                        <div class="vocab-table-wrap">
-                            <table class="vocab-table">
-                                <thead><tr><th>คำศัพท์</th><th>ชนิด</th><th>คำแปล</th><th>🔊</th></tr></thead>
-                                <tbody>${rows}</tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-            }
-
-            const sentences = story.content.match(/[^.!?]+[.!?]+/g) || [story.content];
-            let sentenceHTML = `
-                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
-                    <button class="sentence-btn" data-sentence="-1" onclick="selectSentence(${story.id}, -1)" style="padding:4px 14px;border-radius:var(--radius-full);border:2px solid var(--border-color);background:var(--bg-card);cursor:pointer;font-size:13px;font-weight:600;font-family:var(--font);color:var(--text-secondary);transition:var(--transition);">📄 ทั้งเรื่อง</button>
-                    ${sentences.map((s, i) => `
-                        <button class="sentence-btn" data-sentence="${i}" onclick="selectSentence(${story.id}, ${i})" style="padding:4px 14px;border-radius:var(--radius-full);border:2px solid var(--border-color);background:var(--bg-card);cursor:pointer;font-size:13px;font-weight:500;font-family:var(--font);color:var(--text-secondary);transition:var(--transition);">
-                            ${i+1}
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-
-            const transToggleHTML = `
-                <div class="translation-toggle ${showTranslation ? 'active' : ''}" onclick="toggleTranslation()">
-                    <span>🇹🇭 แสดงคำแปล</span>
-                    <span class="switch"></span>
-                </div>
-                <div class="translation-box ${showTranslation ? 'show' : ''}">
-    <div>${story.content}</div>
-    <div style="font-size:14px;color:var(--text-muted);margin-top:8px;border-top:1px dashed var(--border-color);padding-top:8px;">
-        💡 คำศัพท์สำคัญ: ${story.vocab.map(v => `${v.word} = ${v.meaning}`).join(' · ')}
-    </div>
-</div> ${showTranslation ? 'show' : ''}">
-                    <div>${story.content}</div>
-                    <div style="font-size:14px;color:var(--text-muted);margin-top:8px;border-top:1px dashed var(--border-color);padding-top:8px;">
-                        💡 คำศัพท์สำคัญ: ${story.vocab.map(v => `${v.word} = ${v.meaning}`).join(' · ')}
-                    </div>
-                </div>
-            `;
-
-            storyDisplay.innerHTML = `
-                <div class="story-title">
-                    <span>📖 ${story.title}</span>
-                    <span class="story-id-badge">#${story.id}</span>
-                </div>
-                ${sentenceHTML}
-                <div class="story-content">${highlighted}</div>
-                ${transToggleHTML}
-
-                <div class="audio-controls">
-                    <button class="btn-speaker" id="speakerBtn">
-                        🔊 <span id="speakerLabel">ฟังเสียง</span>
-                    </button>
-                    <div class="speed-group">
-                        <label>🐢</label>
-                        <button class="speed-btn ${currentSpeed === 0.6 ? 'active' : ''}" data-speed="0.6">ช้า</button>
-                        <button class="speed-btn ${currentSpeed === 1.0 ? 'active' : ''}" data-speed="1.0">ปกติ</button>
-                        <button class="speed-btn ${currentSpeed === 1.4 ? 'active' : ''}" data-speed="1.4">เร็ว</button>
-                    </div>
-                    <span class="status-text" id="statusText">⏸ พร้อม</span>
-                </div>
-
-                ${vocabHTML}
-            `;
-
-            const speakerBtn = document.getElementById('speakerBtn');
-            if (speakerBtn) {
-                speakerBtn.addEventListener('click', () => {
-                    const text = getCurrentText(story);
-                    toggleSpeech(text);
-                });
-            }
-
-            document.querySelectorAll('.speed-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentSpeed = parseFloat(this.dataset.speed);
-                    if (currentUtterance) currentUtterance.rate = currentSpeed;
-                });
-            });
-
-            currentSentenceIndex = -1;
-            document.querySelectorAll('.sentence-btn').forEach(b => {
-                b.style.borderColor = 'var(--border-color)';
-                b.style.background = 'var(--bg-card)';
-                b.style.color = 'var(--text-secondary)';
-                if (b.dataset.sentence === '-1') {
-                    b.style.borderColor = 'var(--primary)';
-                    b.style.background = 'var(--primary)';
-                    b.style.color = '#fff';
-                }
-            });
-
-            document.onkeydown = (e) => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-                if (e.key === ' ') { e.preventDefault();
-                    toggleSpeech(getCurrentText(story)); }
-                if (e.key === 't' || e.key === 'T') { toggleTranslation(); }
-                if (e.key === 'ArrowRight') {
-                    const next = allStories.find(s => s.id > currentStoryId);
-                    if (next) showStory(next.id);
-                }
-                if (e.key === 'ArrowLeft') {
-                    const prev = allStories.filter(s => s.id < currentStoryId).pop();
-                    if (prev) showStory(prev.id);
-                }
-            };
         }
+        const contentEl = document.querySelector('.story-content');
+        if (contentEl) contentEl.innerHTML = highlighted;
+        stopSpeaking();
+    }
 
-        function getCurrentText(story) {
-            if (currentSentenceIndex >= 0) {
-                const sentences = story.content.match(/[^.!?]+[.!?]+/g) || [story.content];
-                if (currentSentenceIndex < sentences.length) return sentences[currentSentenceIndex];
-                return story.content;
-            }
-            return story.content;
-        }
+    function toggleTranslation() {
+        showTranslation = !showTranslation;
+        const toggle = document.querySelector('.translation-toggle');
+        const box = document.querySelector('.translation-box');
+        if (toggle) toggle.classList.toggle('active', showTranslation);
+        if (box) box.classList.toggle('show', showTranslation);
+    }
 
-        function selectSentence(storyId, index) {
-            currentSentenceIndex = index;
-            const story = allStories.find(s => s.id === storyId);
-            if (!story) return;
+    // ================================================================
+    //  13. SPEECH
+    // ================================================================
+    function toggleSpeech(text) {
+        if (isSpeaking) { stopSpeaking(); return; }
+        startSpeaking(text);
+    }
 
-            document.querySelectorAll('.sentence-btn').forEach(b => {
-                b.style.borderColor = 'var(--border-color)';
-                b.style.background = 'var(--bg-card)';
-                b.style.color = 'var(--text-secondary)';
-                if (parseInt(b.dataset.sentence) === index) {
-                    b.style.borderColor = 'var(--primary)';
-                    b.style.background = 'var(--primary)';
-                    b.style.color = '#fff';
-                }
-            });
+    function startSpeaking(text) {
+        if (!text) return;
+        if (speech.speaking) speech.cancel();
 
-            const sentences = story.content.match(/[^.!?]+[.!?]+/g) || [story.content];
-            let highlighted = story.content;
-            if (index >= 0 && index < sentences.length) {
-                const parts = [];
-                const fullText = story.content;
-                let pos = 0;
-                for (let i = 0; i < sentences.length; i++) {
-                    const s = sentences[i];
-                    const start = fullText.indexOf(s, pos);
-                    if (start === -1) continue;
-                    if (i === index) {
-                        parts.push(`<mark style="background:var(--accent-light);padding:0 4px;border-radius:4px;">${s}</mark>`);
-                    } else {
-                        parts.push(`<span style="opacity:0.3;font-size:0.9em;">${s}</span>`);
-                    }
-                    pos = start + s.length;
-                }
-                highlighted = parts.join(' ');
-            } else {
-                story.vocab.forEach(v => {
-                    const safe = v.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    const regex = new RegExp(`\\b${safe}\\b`, 'gi');
-                    highlighted = highlighted.replace(regex, match =>
-                        `<span class="highlight" title="${v.type}: ${v.meaning}">${match}</span>`
-                    );
-                });
-            }
-            const contentEl = document.querySelector('.story-content');
-            if (contentEl) contentEl.innerHTML = highlighted;
-            stopSpeaking();
-        }
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = currentSpeed;
+        utterance.pitch = 1.0;
 
-        function toggleTranslation() {
-            showTranslation = !showTranslation;
-            const toggle = document.querySelector('.translation-toggle');
-            const box = document.querySelector('.translation-box');
-            if (toggle) toggle.classList.toggle('active', showTranslation);
-            if (box) box.classList.toggle('show', showTranslation);
-        }
+        const label = document.getElementById('speakerLabel');
+        const btn = document.getElementById('speakerBtn');
+        const status = document.getElementById('statusText');
 
-        // ================================================================
-        //  12. SPEECH
-        // ================================================================
-        function toggleSpeech(text) {
-            if (isSpeaking) { stopSpeaking(); return; }
-            startSpeaking(text);
-        }
+        if (label) label.textContent = '⏹ หยุด';
+        if (btn) btn.classList.add('speaking');
+        if (status) status.textContent = '🔊 กำลังพูด...';
 
-        function startSpeaking(text) {
-            if (!text) return;
-            if (speech.speaking) speech.cancel();
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = currentSpeed;
-            utterance.pitch = 1.0;
-            utterance.volume = currentVolume;
-
-            const label = document.getElementById('speakerLabel');
-            const btn = document.getElementById('speakerBtn');
-            const status = document.getElementById('statusText');
-
-            if (label) label.textContent = '⏹ หยุด';
-            if (btn) btn.classList.add('speaking');
-            if (status) status.textContent = '🔊 กำลังพูด...';
-
-            utterance.onstart = () => { isSpeaking = true;
-                currentUtterance = utterance; };
-            utterance.onend = () => {
-                isSpeaking = false;
-                currentUtterance = null;
-                if (label) label.textContent = 'ฟังเสียง';
-                if (btn) btn.classList.remove('speaking');
-                if (status) status.textContent = '✅ เสร็จ';
-                if (isLoop) setTimeout(() => startSpeaking(text), 800);
-            };
-            utterance.onerror = () => {
-                isSpeaking = false;
-                currentUtterance = null;
-                if (label) label.textContent = 'ฟังเสียง';
-                if (btn) btn.classList.remove('speaking');
-                if (status) status.textContent = '❌ ผิดพลาด';
-            };
-
-            speech.speak(utterance);
-        }
-
-        function stopSpeaking() {
-            if (speech.speaking) speech.cancel();
-            isSpeaking = false;
-            currentUtterance = null;
-            const label = document.getElementById('speakerLabel');
-            const btn = document.getElementById('speakerBtn');
-            const status = document.getElementById('statusText');
+        utterance.onstart = () => { isSpeaking = true; currentUtterance = utterance; };
+        utterance.onend = () => {
+            isSpeaking = false; currentUtterance = null;
             if (label) label.textContent = 'ฟังเสียง';
             if (btn) btn.classList.remove('speaking');
-            if (status) status.textContent = '⏸ หยุด';
+            if (status) status.textContent = '✅ เสร็จ';
+            if (isLoop) setTimeout(() => startSpeaking(text), 800);
+        };
+        utterance.onerror = () => {
+            isSpeaking = false; currentUtterance = null;
+            if (label) label.textContent = 'ฟังเสียง';
+            if (btn) btn.classList.remove('speaking');
+            if (status) status.textContent = '❌ ผิดพลาด';
+        };
+
+        speech.speak(utterance);
+    }
+
+    function stopSpeaking() {
+        if (speech.speaking) speech.cancel();
+        isSpeaking = false;
+        currentUtterance = null;
+        const label = document.getElementById('speakerLabel');
+        const btn = document.getElementById('speakerBtn');
+        const status = document.getElementById('statusText');
+        if (label) label.textContent = 'ฟังเสียง';
+        if (btn) btn.classList.remove('speaking');
+        if (status) status.textContent = '⏸ หยุด';
+    }
+
+    // ================================================================
+    //  14. RENDER ALL VOCAB
+    // ================================================================
+    function renderAllVocab() {
+        const all = [...allVocab, ...favoritesData];
+        let filtered = [...all];
+        const typeFilter = vocabTypeFilter.value;
+        const searchFilter = vocabSearchFilter.value.toLowerCase().trim();
+        if (typeFilter !== 'all') filtered = filtered.filter(v => v.type.toLowerCase() === typeFilter);
+        if (searchFilter) filtered = filtered.filter(v => v.word.toLowerCase().includes(searchFilter) || v.meaning.includes(searchFilter));
+
+        if (!filtered.length) {
+            allVocabGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:30px;">ไม่พบคำศัพท์</div>`;
+            return;
         }
 
-        // ================================================================
-        //  13. RENDER ALL VOCAB
-        // ================================================================
-        function renderAllVocab() {
-            const all = [...allVocab, ...favoritesData];
-            let filtered = [...all];
-            const typeFilter = vocabTypeFilter.value;
-            const searchFilter = vocabSearchFilter.value.toLowerCase().trim();
-            if (typeFilter !== 'all') {
-                filtered = filtered.filter(v => v.type.toLowerCase() === typeFilter);
-            }
-            if (searchFilter) {
-                filtered = filtered.filter(v =>
-                    v.word.toLowerCase().includes(searchFilter) ||
-                    v.meaning.includes(searchFilter)
-                );
-            }
-
-            if (!filtered.length) {
-                allVocabGrid.innerHTML =
-                    `<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:30px;">ไม่พบคำศัพท์</div>`;
-                return;
-            }
-
-            allVocabGrid.innerHTML = filtered.map(v => `
-                <div class="all-vocab-item">
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <div>
-                            <div class="word">${v.word}</div>
-                            <div class="type">${v.type}</div>
-                        </div>
-                        <button class="vocab-speaker-btn" onclick="speakWord('${v.word}', event)">🔊</button>
-                    </div>
-                    <div class="meaning">${v.meaning}</div>
-                    <div class="from-story">📖 ${v.storyTitle || 'คลังส่วนตัว'}</div>
+        allVocabGrid.innerHTML = filtered.map(v => `
+            <div class="all-vocab-item">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div><div class="word">${v.word}</div><div class="type">${v.type}</div></div>
+                    <button class="vocab-speaker-btn" onclick="speakWord('${v.word}', event)">🔊</button>
                 </div>
-            `).join('');
-        }
+                <div class="meaning">${v.meaning}</div>
+                <div class="from-story">📖 ${v.storyTitle || 'คลังส่วนตัว'}</div>
+            </div>
+        `).join('');
+    }
 
-        vocabTypeFilter.addEventListener('change', renderAllVocab);
-        vocabSearchFilter.addEventListener('input', renderAllVocab);
+    vocabTypeFilter.addEventListener('change', renderAllVocab);
+    vocabSearchFilter.addEventListener('input', renderAllVocab);
 
-        // ================================================================
-        //  14. RENDER FAVORITES (Vertical List)
-        // ================================================================
-        function renderFavorites() {
-            if (!favoritesData.length) {
-                favoritesContainer.innerHTML = `
-                    <div class="favorites-empty">
-                        <div class="big-icon">⭐</div>
-                        <h3>ยังไม่มีคำศัพท์ที่ชอบ</h3>
-                        <p>ไปที่แท็บ 📝 เพิ่มคำศัพท์ เพื่อเพิ่มคำศัพท์ในคลังของคุณ</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const groups = {};
-            const typeLabels = {
-                'noun': '📘 คำนาม (Noun)',
-                'verb': '📗 คำกริยา (Verb)',
-                'adjective': '📙 คำคุณศัพท์ (Adjective)',
-                'adverb': '📕 คำวิเศษณ์ (Adverb)',
-                'phrasal verb': '📒 Phrasal Verb',
-                'preposition': '📐 คำบุพบท (Preposition)',
-                'conjunction': '🔗 คำสันธาน (Conjunction)',
-                'interjection': '❗ คำอุทาน (Interjection)',
-                'other': '📚 อื่นๆ'
-            };
-
-            favoritesData.forEach(f => {
-                const type = f.type || 'other';
-                if (!groups[type]) groups[type] = [];
-                groups[type].push(f);
-            });
-
-            let html = `
-                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
-                    <h3 style="color:var(--text-primary);">⭐ คำศัพท์ที่ชอบ (${favoritesData.length} คำ)</h3>
+    // ================================================================
+    //  15. RENDER FAVORITES
+    // ================================================================
+    function renderFavorites() {
+        if (!favoritesData.length) {
+            favoritesContainer.innerHTML = `
+                <div class="favorites-empty">
+                    <div class="big-icon">⭐</div>
+                    <h3>ยังไม่มีคำศัพท์ที่ชอบ</h3>
+                    <p>ไปที่แท็บ 📝 เพิ่มคำศัพท์ เพื่อเพิ่มคำศัพท์ในคลังของคุณ</p>
                 </div>
             `;
+            return;
+        }
 
-            const sortedTypes = Object.keys(groups).sort((a, b) => {
-                const order = ['noun', 'verb', 'adjective', 'adverb', 'phrasal verb', 'preposition', 'conjunction',
-                    'interjection', 'other'
-                ];
-                return order.indexOf(a) - order.indexOf(b);
-            });
+        const groups = {};
+        const typeLabels = {
+            'noun': '📘 คำนาม (Noun)',
+            'verb': '📗 คำกริยา (Verb)',
+            'adjective': '📙 คำคุณศัพท์ (Adjective)',
+            'adverb': '📕 คำวิเศษณ์ (Adverb)',
+            'phrasal verb': '📒 Phrasal Verb'
+        };
+        favoritesData.forEach(f => {
+            const type = f.type || 'other';
+            if (!groups[type]) groups[type] = [];
+            groups[type].push(f);
+        });
 
-            sortedTypes.forEach(type => {
-                const items = groups[type];
-                const label = typeLabels[type] || `📚 ${type}`;
-                html += `
-                    <div class="fav-group">
-                        <div class="group-title">
-                            ${label}
-                            <span class="group-count">${items.length} คำ</span>
-                        </div>
-                        <div class="fav-vertical-list">
-                            ${items.map(f => `
-                                <div class="fav-vertical-item">
-                                    <div class="row-top">
-                                        <span class="word">${f.word}</span>
-                                        <span class="type-badge">${f.type}</span>
-                                        <span class="meaning">${f.meaning}</span>
-                                        <div class="actions">
-                                            <button class="vocab-speaker-btn" onclick="speakWord('${f.word}', event)">🔊</button>
-                                        </div>
-                                    </div>
-                                    <div class="row-detail">
-                                        ${f.example ? `<span class="example">📖 ${f.example}</span>` : ''}
-                                        ${f.category ? `<span class="category">🏷️ ${f.category}</span>` : ''}
-                                        ${f.note ? `<span class="note">📌 ${f.note}</span>` : ''}
-                                        ${f.date_added ? `<span class="date">📅 ${f.date_added}</span>` : ''}
+        let html = `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <h3>⭐ คำศัพท์ที่ชอบ (${favoritesData.length} คำ)</h3>
+        </div>`;
+
+        const sortedTypes = Object.keys(groups).sort((a, b) => {
+            const order = ['noun', 'verb', 'adjective', 'adverb', 'phrasal verb', 'other'];
+            return order.indexOf(a) - order.indexOf(b);
+        });
+
+        sortedTypes.forEach(type => {
+            const items = groups[type];
+            const label = typeLabels[type] || `📚 ${type}`;
+            html += `
+                <div class="fav-group">
+                    <div class="group-title">${label} <span class="group-count">${items.length} คำ</span></div>
+                    <div class="fav-vertical-list">
+                        ${items.map(f => `
+                            <div class="fav-vertical-item">
+                                <div class="row-top">
+                                    <span class="word">${f.word}</span>
+                                    <span class="type-badge">${f.type}</span>
+                                    <span class="meaning">${f.meaning}</span>
+                                    <div class="actions">
+                                        <button class="vocab-speaker-btn" onclick="speakWord('${f.word}', event)">🔊</button>
                                     </div>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-
-            favoritesContainer.innerHTML = html;
-        }
-
-        // ================================================================
-        //  15. RENDER MY VOCAB
-        // ================================================================
-        function renderMyVocab() {
-            if (!favoritesData.length) {
-                myVocabList.innerHTML =
-                    `<div style="text-align:center;color:var(--text-muted);padding:20px;">ยังไม่มีคำศัพท์ เพิ่มคำศัพท์ด้านบน</div>`;
-                return;
-            }
-
-            myVocabList.innerHTML = favoritesData.map(f => `
-                <div class="fav-vertical-item">
-                    <div class="row-top">
-                        <span class="word">${f.word}</span>
-                        <span class="type-badge">${f.type}</span>
-                        <span class="meaning">${f.meaning}</span>
-                        <div class="actions">
-                            <button class="vocab-speaker-btn" onclick="speakWord('${f.word}', event)">🔊</button>
-                        </div>
-                    </div>
-                    <div class="row-detail">
-                        ${f.example ? `<span class="example">📖 ${f.example}</span>` : ''}
-                        ${f.category ? `<span class="category">🏷️ ${f.category}</span>` : ''}
-                        ${f.note ? `<span class="note">📌 ${f.note}</span>` : ''}
-                        ${f.date_added ? `<span class="date">📅 ${f.date_added}</span>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ================================================================
-        //  16. ADD WORD FORM
-        // ================================================================
-        document.getElementById('addWordForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const word = document.getElementById('newWord').value.trim();
-            const type = document.getElementById('newType').value;
-            const meaning = document.getElementById('newMeaning').value.trim();
-            const example = document.getElementById('newExample').value.trim();
-            const category = document.getElementById('newCategory').value.trim();
-            const note = document.getElementById('newNote').value.trim();
-
-            if (!word || !type || !meaning) {
-                document.getElementById('addResult').innerHTML =
-                    `<div style="color:var(--danger);">กรุณากรอกข้อมูลให้ครบถ้วน</div>`;
-                return;
-            }
-
-            const newId = favoritesData.length > 0 ? Math.max(...favoritesData.map(f => f.id)) + 1 : 1;
-            const date_added = new Date().toISOString().split('T')[0];
-
-            const newWord = {
-                id: newId,
-                word,
-                type,
-                meaning,
-                example,
-                category,
-                note,
-                date_added,
-                source: 'favorite',
-                storyTitle: 'คลังส่วนตัว'
-            };
-
-            favoritesData.push(newWord);
-            renderFavorites();
-            renderMyVocab();
-            renderAllVocab();
-            favCount.textContent = favoritesData.length;
-            totalWords.textContent = allVocab.length + favoritesData.length;
-
-            document.getElementById('addResult').innerHTML =
-                `<div style="color:var(--success);">✅ เพิ่มคำศัพท์ "${word}" สำเร็จ!</div>`;
-            this.reset();
-
-            try {
-                await saveToGoogleSheets(newWord);
-            } catch (err) {
-                console.warn('ไม่สามารถบันทึกลง Google Sheets ได้', err);
-            }
-        });
-
-        async function saveToGoogleSheets(data) {
-            const SCRIPT_URL = '';
-            if (!SCRIPT_URL) return;
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            return response;
-        }
-
-        // ================================================================
-        //  17. QUIZ
-        // ================================================================
-        function initQuiz() {
-            const all = [...allVocab, ...favoritesData];
-            if (!all.length) {
-                quizContainer.innerHTML = `<div class="loading">ไม่มีคำศัพท์สำหรับทำแบบทดสอบ</div>`;
-                return;
-            }
-            const shuffled = [...all].sort(() => Math.random() - 0.5);
-            const selected = shuffled.slice(0, Math.min(10, shuffled.length));
-            quizQuestions = selected.map(v => ({
-                word: v.word,
-                type: v.type,
-                meaning: v.meaning,
-                wrongs: all
-                    .filter(w => w.meaning !== v.meaning)
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 3)
-                    .map(w => w.meaning)
-            }));
-            quizIndex = 0;
-            quizScore = 0;
-            quizAnswered = false;
-            renderQuiz();
-        }
-
-        function renderQuiz() {
-            if (!quizQuestions.length || quizIndex >= quizQuestions.length) {
-                quizContainer.innerHTML = `
-                    <div class="quiz-container">
-                        <div class="quiz-result" style="color:var(--success);font-size:24px;">🎉 ทำแบบทดสอบเสร็จแล้ว!</div>
-                        <div class="quiz-score">คะแนน: ${quizScore} / ${quizQuestions.length}</div>
-                        <button class="quiz-next-btn" onclick="initQuiz()">🔄 ทำใหม่</button>
-                    </div>
-                `;
-                return;
-            }
-
-            const q = quizQuestions[quizIndex];
-            const options = [q.meaning, ...q.wrongs].sort(() => Math.random() - 0.5);
-
-            quizContainer.innerHTML = `
-                <div class="quiz-container">
-                    <div class="quiz-question">📝 คำว่า "<strong>${q.word}</strong>" (${q.type}) แปลว่าอะไร?</div>
-                    <div class="quiz-options" id="quizOptions">
-                        ${options.map((opt, i) => `
-                            <button data-index="${i}" data-answer="${opt === q.meaning}">
-                                ${opt}
-                            </button>
+                                <div class="row-detail">
+                                    ${f.example ? `<span class="example">📖 ${f.example}</span>` : ''}
+                                    ${f.category ? `<span class="category">🏷️ ${f.category}</span>` : ''}
+                                    ${f.note ? `<span class="note">📌 ${f.note}</span>` : ''}
+                                    ${f.date_added ? `<span class="date">📅 ${f.date_added}</span>` : ''}
+                                </div>
+                            </div>
                         `).join('')}
                     </div>
-                    <div class="quiz-result" id="quizResult"></div>
-                    <div class="quiz-score">ข้อ ${quizIndex + 1} / ${quizQuestions.length} · คะแนน ${quizScore}</div>
-                    <button class="quiz-next-btn" id="quizNextBtn" style="display:none;">➡️ ข้อถัดไป</button>
                 </div>
             `;
-
-            document.querySelectorAll('#quizOptions button').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (quizAnswered) return;
-                    quizAnswered = true;
-                    const correct = this.dataset.answer === 'true';
-                    const result = document.getElementById('quizResult');
-                    if (correct) {
-                        quizScore++;
-                        this.classList.add('correct');
-                        result.textContent = '✅ ถูกต้อง!';
-                        result.style.color = 'var(--success)';
-                    } else {
-                        this.classList.add('wrong');
-                        result.textContent = `❌ ผิด! คำตอบคือ "${q.meaning}"`;
-                        result.style.color = 'var(--danger)';
-                        document.querySelectorAll('#quizOptions button').forEach(b => {
-                            if (b.dataset.answer === 'true') b.classList.add('correct');
-                        });
-                    }
-                    document.querySelectorAll('#quizOptions button').forEach(b => b.disabled = true);
-                    document.getElementById('quizNextBtn').style.display = 'inline-block';
-                });
-            });
-
-            document.getElementById('quizNextBtn').addEventListener('click', () => {
-                quizIndex++;
-                quizAnswered = false;
-                renderQuiz();
-            });
-        }
-
-        // ================================================================
-        //  18. GLOBAL SEARCH & TABS
-        // ================================================================
-        globalSearch.addEventListener('input', function() {
-            const val = this.value.trim();
-            if (val) {
-                switchTab('stories');
-                renderStoryGrid(val);
-                vocabSearchFilter.value = val;
-                renderAllVocab();
-            } else {
-                renderStoryGrid('');
-                vocabSearchFilter.value = '';
-                renderAllVocab();
-            }
         });
 
-        document.querySelectorAll('.tab-btn').forEach(btn => {
+        favoritesContainer.innerHTML = html;
+    }
+
+    // ================================================================
+    //  16. RENDER MY VOCAB
+    // ================================================================
+    function renderMyVocab() {
+        if (!favoritesData.length) {
+            myVocabList.innerHTML = `<div style="text-align:center;color:#94a3b8;padding:20px;">ยังไม่มีคำศัพท์ เพิ่มคำศัพท์ด้านบน</div>`;
+            return;
+        }
+
+        myVocabList.innerHTML = favoritesData.map(f => `
+            <div class="fav-vertical-item">
+                <div class="row-top">
+                    <span class="word">${f.word}</span>
+                    <span class="type-badge">${f.type}</span>
+                    <span class="meaning">${f.meaning}</span>
+                    <div class="actions">
+                        <button class="vocab-speaker-btn" onclick="speakWord('${f.word}', event)">🔊</button>
+                    </div>
+                </div>
+                <div class="row-detail">
+                    ${f.example ? `<span class="example">📖 ${f.example}</span>` : ''}
+                    ${f.category ? `<span class="category">🏷️ ${f.category}</span>` : ''}
+                    ${f.note ? `<span class="note">📌 ${f.note}</span>` : ''}
+                    ${f.date_added ? `<span class="date">📅 ${f.date_added}</span>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ================================================================
+    //  17. ADD WORD FORM
+    // ================================================================
+    document.getElementById('addWordForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const word = document.getElementById('newWord').value.trim();
+        const type = document.getElementById('newType').value;
+        const meaning = document.getElementById('newMeaning').value.trim();
+        const example = document.getElementById('newExample').value.trim();
+        const category = document.getElementById('newCategory').value.trim();
+        const note = document.getElementById('newNote').value.trim();
+
+        if (!word || !type || !meaning) {
+            document.getElementById('addResult').innerHTML = `<div style="color:#dc2626;">กรุณากรอกข้อมูลให้ครบถ้วน</div>`;
+            return;
+        }
+
+        const newId = favoritesData.length > 0 ? Math.max(...favoritesData.map(f => f.id)) + 1 : 1;
+        const date_added = new Date().toISOString().split('T')[0];
+
+        const newWord = { id: newId, word, type, meaning, example, category, note, date_added, source: 'favorite', storyTitle: 'คลังส่วนตัว' };
+
+        favoritesData.push(newWord);
+        renderFavorites();
+        renderMyVocab();
+        renderAllVocab();
+        favCount.textContent = favoritesData.length;
+        totalWords.textContent = allVocab.length + favoritesData.length;
+
+        document.getElementById('addResult').innerHTML = `<div style="color:#22c55e;">✅ เพิ่มคำศัพท์ "${word}" สำเร็จ!</div>`;
+        this.reset();
+        try { await saveToGoogleSheets(newWord); } catch (err) { console.warn('ไม่สามารถบันทึกลง Sheets ได้', err); }
+    });
+
+    async function saveToGoogleSheets(data) {
+        // ต้องตั้งค่า SCRIPT_URL หากต้องการบันทึกอัตโนมัติ
+        const SCRIPT_URL = '';
+        if (!SCRIPT_URL) return;
+        await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    }
+
+    // ================================================================
+    //  18. QUIZ
+    // ================================================================
+    function initQuiz() {
+        const all = [...allVocab, ...favoritesData];
+        if (!all.length) {
+            quizContainer.innerHTML = `<div class="loading">ไม่มีคำศัพท์สำหรับทำแบบทดสอบ</div>`;
+            return;
+        }
+        const shuffled = [...all].sort(() => Math.random() - 0.5);
+        const selected = shuffled.slice(0, Math.min(10, shuffled.length));
+        quizQuestions = selected.map(v => ({
+            word: v.word,
+            type: v.type,
+            meaning: v.meaning,
+            wrongs: all.filter(w => w.meaning !== v.meaning).sort(() => Math.random() - 0.5).slice(0, 3).map(w => w.meaning)
+        }));
+        quizIndex = 0;
+        quizScore = 0;
+        quizAnswered = false;
+        renderQuiz();
+    }
+
+    function renderQuiz() {
+        if (!quizQuestions.length || quizIndex >= quizQuestions.length) {
+            quizContainer.innerHTML = `
+                <div class="quiz-container">
+                    <div class="quiz-result" style="color:#22c55e;font-size:22px;">🎉 ทำแบบทดสอบเสร็จแล้ว!</div>
+                    <div class="quiz-score" style="margin-top:6px;color:#94a3b8;">คะแนน: ${quizScore} / ${quizQuestions.length}</div>
+                    <button class="quiz-next-btn" onclick="initQuiz()">🔄 ทำใหม่</button>
+                </div>
+            `;
+            return;
+        }
+
+        const q = quizQuestions[quizIndex];
+        const options = [q.meaning, ...q.wrongs].sort(() => Math.random() - 0.5);
+
+        quizContainer.innerHTML = `
+            <div class="quiz-container">
+                <div class="quiz-question">📝 คำว่า "<strong>${q.word}</strong>" (${q.type}) แปลว่าอะไร?</div>
+                <div class="quiz-options" id="quizOptions">
+                    ${options.map((opt, i) => `<button data-index="${i}" data-answer="${opt === q.meaning}">${opt}</button>`).join('')}
+                </div>
+                <div class="quiz-result" id="quizResult"></div>
+                <div class="quiz-score" style="color:#94a3b8;font-size:14px;">ข้อ ${quizIndex + 1} / ${quizQuestions.length} · คะแนน ${quizScore}</div>
+                <button class="quiz-next-btn" id="quizNextBtn" style="display:none;">➡️ ข้อถัดไป</button>
+            </div>
+        `;
+
+        document.querySelectorAll('#quizOptions button').forEach(btn => {
             btn.addEventListener('click', function() {
-                switchTab(this.dataset.tab);
+                if (quizAnswered) return;
+                quizAnswered = true;
+                const correct = this.dataset.answer === 'true';
+                const result = document.getElementById('quizResult');
+                if (correct) {
+                    quizScore++;
+                    this.classList.add('correct');
+                    result.textContent = '✅ ถูกต้อง!';
+                    result.style.color = '#22c55e';
+                } else {
+                    this.classList.add('wrong');
+                    result.textContent = `❌ ผิด! คำตอบคือ "${q.meaning}"`;
+                    result.style.color = '#dc2626';
+                    document.querySelectorAll('#quizOptions button').forEach(b => {
+                        if (b.dataset.answer === 'true') b.classList.add('correct');
+                    });
+                }
+                document.querySelectorAll('#quizOptions button').forEach(b => b.disabled = true);
+                document.getElementById('quizNextBtn').style.display = 'inline-block';
             });
         });
 
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.tab-btn[data-tab="${tab}"]`)?.classList.add('active');
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            const panel = document.getElementById('panel-' + tab);
-            if (panel) panel.classList.add('active');
-            if (tab === 'favorites') renderFavorites();
-            if (tab === 'addword') renderMyVocab();
-            if (tab === 'quiz') initQuiz();
-            if (tab === 'vocab') renderAllVocab();
-        }
+        document.getElementById('quizNextBtn').addEventListener('click', () => {
+            quizIndex++;
+            quizAnswered = false;
+            renderQuiz();
+        });
+    }
 
-        // ================================================================
-        //  19. START
-        // ================================================================
-                // ================================================================
-        //  20. TRANSLATION FUNCTION (ใช้ Google Translate)
-        // ================================================================
-        async function translateText(text, targetLang = 'th') {
-            try {
-                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-                const response = await fetch(url);
-                const data = await response.json();
-                return data[0].map(item => item[0]).join('');
-            } catch (error) {
-                console.error('Translation error:', error);
-                return text; // ถ้าแปลไม่ได้ ให้แสดงข้อความต้นฉบับ
-            }
-        }
+    // ================================================================
+    //  19. TABS & SEARCH
+    // ================================================================
+    globalSearch.addEventListener('input', function() {
+        const val = this.value.trim();
+        if (val) { switchTab('stories'); renderStoryGrid(val); vocabSearchFilter.value = val; renderAllVocab(); }
+        else { renderStoryGrid(''); vocabSearchFilter.value = ''; renderAllVocab(); }
+    });
 
-        // แก้ไขฟังก์ชัน toggleTranslation
-        const originalToggleTranslation = toggleTranslation;
-        toggleTranslation = async function() {
-            showTranslation = !showTranslation;
-            const toggle = document.querySelector('.translation-toggle');
-            const box = document.querySelector('.translation-box');
-            if (toggle) toggle.classList.toggle('active', showTranslation);
-            if (box) {
-                box.classList.toggle('show', showTranslation);
-                if (showTranslation) {
-                    const contentEl = document.getElementById('translationContent');
-                    if (contentEl && contentEl.textContent === '⏳ กำลังแปล...') {
-                        const story = allStories.find(s => s.id === currentStoryId);
-                        if (story) {
-                            try {
-                                const translated = await translateText(story.content);
-                                contentEl.textContent = translated;
-                            } catch (e) {
-                                contentEl.textContent = '⚠️ ไม่สามารถแปลได้';
-                            }
-                        }
-                    }
-                }
-            }
-        };
-    </script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() { switchTab(this.dataset.tab); });
+    });
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-tab="${tab}"]`)?.classList.add('active');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById('panel-' + tab);
+        if (panel) panel.classList.add('active');
+        if (tab === 'favorites') renderFavorites();
+        if (tab === 'addword') renderMyVocab();
+        if (tab === 'quiz') initQuiz();
+        if (tab === 'vocab') renderAllVocab();
+    }
+
+    // ================================================================
+    //  20. START
+    // ================================================================
+    loadData();
+</script>
 </body>
 </html>
