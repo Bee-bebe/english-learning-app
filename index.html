@@ -1165,7 +1165,7 @@
 
                 const storiesCSV = await storiesResp.text();
                 const storiesRows = parseCSV(storiesCSV);
-                allStories = buildStories(storiesRows);
+                                allStories = buildStories(storiesRows);
                 allVocab = buildAllVocab(allStories);
 
                 if (favResp.ok) {
@@ -1175,13 +1175,11 @@
                 } else {
                     favoritesData = [];
                 }
-                }
 
                 storyCount.textContent = allStories.length;
                 vocabCount.textContent = allVocab.length;
                 totalWords.textContent = allVocab.length + favoritesData.length;
                 favCount.textContent = favoritesData.length;
-
                 renderStoryGrid();
                 renderAllVocab();
                 renderFavorites();
@@ -1228,6 +1226,9 @@
         // ================================================================
         //  8. BUILD STORIES
         // ================================================================
+                // ================================================================
+        //  8. BUILD STORIES
+        // ================================================================
         function buildStories(rows) {
             const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
             const map = new Map();
@@ -1241,17 +1242,78 @@
                 const id = parseInt(get('story_id')) || i;
                 const title = get('title') || `เรื่องที่ ${id}`;
                 const content = get('content') || '';
+                const thaiTranslation = get('thai_translation') || '';
                 const word = get('vocab_word');
                 const type = get('vocab_type');
                 const meaning = get('vocab_meaning');
                 if (!map.has(id)) {
-                    map.set(id, { id, title, content, vocab: [] });
+                    map.set(id, { id, title, content, thaiTranslation, vocab: [] });
                 }
                 if (word && type && meaning) {
                     map.get(id).vocab.push({ word, type, meaning });
                 }
             }
             return Array.from(map.values());
+        }
+
+        // ================================================================
+        //  9. BUILD ALL VOCAB
+        // ================================================================
+        function buildAllVocab(stories) {
+            const result = [];
+            stories.forEach(s => {
+                s.vocab.forEach(v => {
+                    result.push({
+                        word: v.word,
+                        type: v.type,
+                        meaning: v.meaning,
+                        storyId: s.id,
+                        storyTitle: s.title,
+                        source: 'story'
+                    });
+                });
+            });
+            return result;
+        }
+
+        // ================================================================
+        //  10. BUILD FAVORITES
+        // ================================================================
+        function buildFavorites(rows) {
+            if (rows.length < 2) return [];
+            const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
+            const result = [];
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (row.length < header.length) continue;
+                const get = (key) => {
+                    const idx = header.indexOf(key);
+                    return (idx !== -1 && idx < row.length) ? row[idx] : '';
+                };
+                const id = parseInt(get('id')) || i;
+                const word = get('word');
+                const type = get('type');
+                const meaning = get('meaning');
+                const example = get('example');
+                const category = get('category');
+                const note = get('note');
+                const date_added = get('date_added');
+                if (word && type && meaning) {
+                    result.push({
+                        id,
+                        word,
+                        type,
+                        meaning,
+                        example,
+                        category,
+                        note,
+                        date_added,
+                        source: 'favorite',
+                        storyTitle: 'คลังส่วนตัว'
+                    });
+                }
+            }
+            return result;
         }
 
         function buildAllVocab(stories) {
