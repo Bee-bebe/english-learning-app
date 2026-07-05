@@ -5,625 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌟 English Pro - ฝึกภาษาอังกฤษ</title>
     <style>
-        /* ===== CSS Variables & Reset ===== */
-        :root {
-            --bg-primary: #f0f7ff;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --bg-card-alt: #f8fafc;
-            --text-primary: #0f172a;
-            --text-secondary: #334155;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --shadow: 0 2px 12px rgba(0,0,0,0.06);
-            --radius: 16px;
-            --radius-sm: 12px;
-            --radius-full: 9999px;
-            --primary: #1e3a6f;
-            --primary-hover: #0f2a52;
-            --primary-light: #e8edf6;
-            --accent: #f59e0b;
-            --accent-light: #fef3c7;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body.dark {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: #1e293b;
-            --bg-card-alt: #2d3a4f;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --shadow: 0 2px 12px rgba(0,0,0,0.4);
-            --primary-light: #2d3a4f;
-            --accent-light: #4a3a1a;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: var(--font);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background var(--transition), color var(--transition);
-            min-height: 100vh;
-            padding: 16px;
-            line-height: 1.6;
-        }
-        .app { max-width: 1100px; margin: 0 auto; }
-
-        /* ===== Scrollbar ===== */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-        /* ===== Header ===== */
-        .header {
+              /* ===== SEARCH RESULTS DROPDOWN ===== */
+        #searchResults {
+            margin-top: 4px;
+            padding: 6px 0;
             background: var(--bg-secondary);
-            border-radius: var(--radius);
-            padding: 16px 24px;
-            box-shadow: var(--shadow);
-            margin-bottom: 16px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
             border: 1px solid var(--border-color);
-            transition: background var(--transition), border-color var(--transition);
+            border-radius: 12px;
+            max-height: 350px;
+            overflow-y: auto;
+            z-index: 999;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            display: none;
         }
-        .header-left { display: flex; align-items: center; gap: 12px; }
-        .header-left .logo { font-size: 28px; }
-        .header-left h1 { font-size: 20px; font-weight: 700; }
-        .header-left h1 span { color: var(--primary); }
-        .header-left .badge {
-            background: var(--primary);
-            color: #fff;
-            font-size: 11px;
-            padding: 2px 12px;
-            border-radius: var(--radius-full);
-        }
-        .header-right {
+        #searchResults .result-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
         }
-        .search-box { position: relative; }
-        .search-box input {
-            padding: 6px 12px 6px 32px;
-            border-radius: var(--radius-full);
-            border: 2px solid var(--border-color);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 14px;
-            width: 180px;
-            outline: none;
-            transition: var(--transition);
+        #searchResults .result-item:last-child {
+            border-bottom: none;
         }
-        .search-box input:focus { border-color: var(--primary); width: 220px; }
-        .search-box .icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-        .stats {
-            font-size: 13px;
-            color: var(--text-muted);
-            background: var(--bg-primary);
-            padding: 4px 14px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
-        }
-        .stats span { font-weight: 600; color: var(--text-primary); }
-        .theme-toggle {
-            background: var(--bg-primary);
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-full);
-            padding: 4px 12px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: var(--transition);
-            color: var(--text-primary);
-        }
-        .theme-toggle:hover { border-color: var(--primary); }
-
-        /* ===== Tabs (8 เมนู) ===== */
-        .tabs {
-            display: flex;
-            gap: 4px;
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
-            padding: 6px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .tab-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: var(--radius-sm);
-            background: transparent;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--font);
-            flex: 1 1 auto;
-            justify-content: center;
-        }
-        .tab-btn:hover { background: var(--bg-primary); color: var(--text-primary); }
-        .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(30,58,111,0.3); }
-        .tab-btn .count {
-            font-size: 11px;
-            background: rgba(255,255,255,0.2);
-            padding: 0 10px;
-            border-radius: var(--radius-full);
-        }
-        .tab-btn.active .count { background: rgba(255,255,255,0.25); }
-
-        /* ===== Main Content ===== */
-        .main-content {
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            transition: background var(--transition), border-color var(--transition);
-            min-height: 420px;
-        }
-        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
-        .tab-panel.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ===== Story Grid ===== */
-        .story-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .story-btn {
-            padding: 10px 14px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: var(--transition);
-            color: var(--text-secondary);
-            text-align: center;
-            font-family: var(--font);
-        }
-        .story-btn:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
-        .story-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
-        .story-btn .story-id { font-size: 11px; opacity: 0.6; display: block; font-weight: 400; }
-
-        /* ===== Story Display ===== */
-        .story-display {
+        #searchResults .result-item:hover {
             background: var(--bg-card-alt);
-            border-radius: var(--radius-sm);
-            padding: 18px;
-            border-left: 4px solid var(--primary);
-            transition: background var(--transition);
         }
-        .story-title {
-            font-size: 22px;
+        #searchResults .result-item .word {
             font-weight: 700;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            color: var(--primary);
+            font-size: 15px;
         }
-        .story-title .story-id-badge {
-            font-size: 13px;
+        #searchResults .result-item .meaning {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        #searchResults .result-item .source {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            padding: 0 10px;
+            border-radius: 20px;
+        }
+        #searchResults .result-item .type-badge {
+            font-size: 11px;
             background: var(--primary-light);
-            padding: 0 14px;
-            border-radius: var(--radius-full);
-            font-weight: 600;
+            padding: 0 10px;
+            border-radius: 20px;
             color: var(--primary);
         }
-        .story-content {
-            font-size: 17px;
-            line-height: 1.9;
-            background: var(--bg-card);
-            padding: 14px 18px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            margin-bottom: 12px;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .story-content .highlight {
-            background: var(--accent-light);
-            padding: 0 4px;
-            border-radius: 4px;
-            cursor: help;
-            font-weight: 500;
-        }
-
-        /* Translation */
-        .translation-toggle {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 6px 14px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            width: fit-content;
-            transition: var(--transition);
-        }
-        .translation-toggle:hover { border-color: var(--primary); }
-        .translation-toggle .switch {
-            width: 36px;
-            height: 20px;
-            background: var(--border-color);
-            border-radius: 20px;
-            position: relative;
-            transition: var(--transition);
-        }
-        .translation-toggle .switch::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: #fff;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: var(--transition);
-        }
-        .translation-toggle.active .switch { background: var(--primary); }
-        .translation-toggle.active .switch::after { left: 18px; }
-        .translation-box {
-            background: var(--bg-card);
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            border: 2px dashed var(--accent);
+        #searchResults .result-item .speaker-icon {
             font-size: 16px;
-            line-height: 1.9;
-            color: var(--text-secondary);
-            display: none;
-            margin-bottom: 12px;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .translation-box.show { display: block; }
-
-        /* ===== Sentence Mode ===== */
-        .sentence-mode {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-        .sentence-btn {
-            padding: 4px 14px;
-            border-radius: var(--radius-full);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: var(--transition);
-            color: var(--text-secondary);
-            font-family: var(--font);
-        }
-        .sentence-btn:hover { border-color: var(--primary); background: var(--primary-light); }
-        .sentence-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
-
-        /* ===== Audio Controls ===== */
-        .audio-controls {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            background: var(--bg-card);
-            padding: 10px 16px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
-            margin-bottom: 12px;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .btn-speaker {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .btn-speaker:hover { background: var(--primary-hover); transform: scale(1.02); }
-        .btn-speaker.speaking { background: var(--danger); animation: pulse 0.8s infinite; }
-        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-        .speed-group {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            color: var(--primary);
             margin-left: auto;
         }
-        .speed-group label { font-size: 13px; color: var(--text-muted); }
-        .speed-btn {
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: var(--transition);
-            color: var(--text-secondary);
-            font-family: var(--font);
+        #searchResults .result-item .speaker-icon:hover {
+            transform: scale(1.2);
         }
-        .speed-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
-        .status-text { font-size: 13px; color: var(--text-muted); min-width: 70px; text-align: center; }
-
-        /* ===== Vocab Table ===== */
-                .clickable-word {
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--primary);
-            transition: var(--transition);
-            border-radius: 4px;
-            padding: 0 4px;
-        }
-        .clickable-word:hover {
-            background: var(--accent-light);
-            transform: scale(1.05);
-        }
-        .clickable-word.speaking {
-            color: var(--danger);
-            animation: pulse 0.6s infinite;
-        }
-        .vocab-section { margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--border-color); }
-        .vocab-section h3 { font-size: 17px; margin-bottom: 10px; }
-        .vocab-table-wrap { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
-        .vocab-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 350px; }
-        .vocab-table th { background: var(--primary); color: #fff; padding: 8px 14px; text-align: left; font-size: 13px; }
-        .vocab-table td { padding: 8px 14px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
-        .vocab-table tr:nth-child(even) td { background: var(--bg-card-alt); }
-        .vocab-table .type-badge { display: inline-block; background: var(--primary-light); padding: 2px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; color: var(--primary); }
-        .vocab-speaker-btn {
-            background: none; border: none; cursor: pointer; font-size: 18px; padding: 4px 8px;
-            color: var(--primary); border-radius: var(--radius-full); transition: var(--transition);
-        }
-        .vocab-speaker-btn:hover { background: var(--primary-light); transform: scale(1.1); }
-
-        /* ===== All Vocab Grid (for vocabulary, favorites) ===== */
-        .all-vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-            max-height: 520px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .all-vocab-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            transition: var(--transition);
-        }
-        .all-vocab-item:hover { border-color: var(--primary); box-shadow: var(--shadow); }
-        .all-vocab-item .word { font-size: 16px; font-weight: 700; color: var(--text-primary); }
-        .all-vocab-item .type { font-size: 12px; color: var(--text-muted); }
-        .all-vocab-item .meaning { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
-        .all-vocab-item .from-story { font-size: 11px; color: var(--text-muted); margin-top: 6px; border-top: 1px dashed var(--border-color); padding-top: 6px; }
-
-        /* ===== Favorites - Vertical List ===== */
-        .fav-vertical-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 520px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .fav-vertical-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 14px 18px;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .fav-vertical-item:hover { border-color: var(--primary); box-shadow: var(--shadow); }
-        .fav-vertical-item .row-top {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .fav-vertical-item .row-top .word { font-size: 18px; font-weight: 700; color: var(--text-primary); }
-        .fav-vertical-item .row-top .type-badge { display: inline-block; background: var(--primary-light); padding: 2px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; color: var(--primary); }
-        .fav-vertical-item .row-top .meaning { font-size: 16px; color: var(--text-secondary); }
-        .fav-vertical-item .row-top .actions { display: flex; gap: 6px; margin-left: auto; align-items: center; }
-        .fav-vertical-item .row-detail {
-            font-size: 13px;
-            color: var(--text-muted);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding-top: 4px;
-            border-top: 1px dashed var(--border-color);
-            margin-top: 4px;
-        }
-        .fav-vertical-item .row-detail .example { color: var(--text-secondary); font-style: italic; }
-        .fav-vertical-item .row-detail .category { background: var(--bg-primary); padding: 0 10px; border-radius: var(--radius-full); font-size: 12px; }
-        .fav-vertical-item .row-detail .note { background: var(--accent-light); padding: 0 10px; border-radius: var(--radius-full); font-size: 12px; }
-        .fav-vertical-item .row-detail .date { font-size: 12px; }
-
-        .fav-group { margin-bottom: 20px; }
-        .fav-group .group-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .fav-group .group-title .group-count { font-size: 13px; font-weight: 500; color: var(--text-muted); background: var(--bg-card-alt); padding: 0 12px; border-radius: var(--radius-full); }
-
-        .favorites-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-        .favorites-empty .big-icon { font-size: 48px; margin-bottom: 12px; }
-
-        /* ===== Add Word Form ===== */
-        .add-word-form {
-            background: var(--bg-card-alt);
-            border-radius: var(--radius-sm);
+        #searchResults .no-result {
             padding: 20px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 20px;
-            transition: background var(--transition), border-color var(--transition);
-        }
-        .add-word-form h2 { margin-bottom: 4px; }
-        .add-word-form .sub { color: var(--text-muted); margin-bottom: 14px; font-size: 14px; }
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: var(--font);
-            outline: none;
-            transition: var(--transition);
-        }
-        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn-submit {
-            padding: 10px 28px;
-            border-radius: var(--radius-full);
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .btn-submit:hover { background: var(--primary-hover); transform: scale(1.02); }
-
-        /* ===== Quiz ===== */
-        .quiz-container { text-align: center; padding: 20px 0; }
-        .quiz-question { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
-        .quiz-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto 16px;
-        }
-        .quiz-options button {
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            transition: var(--transition);
-            font-family: var(--font);
-            color: var(--text-primary);
-        }
-        .quiz-options button:hover { border-color: var(--primary); }
-        .quiz-options button.correct { border-color: var(--success); background: #dcfce7; color: #166534; }
-        .quiz-options button.wrong { border-color: var(--danger); background: #fee2e2; color: #991b1b; }
-        .quiz-options button:disabled { cursor: not-allowed; opacity: 0.7; }
-        .quiz-result { font-size: 17px; font-weight: 600; margin-top: 10px; min-height: 30px; }
-        .quiz-next-btn {
-            padding: 8px 28px;
-            border-radius: var(--radius-full);
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-            margin-top: 10px;
-        }
-        .quiz-next-btn:hover { background: var(--primary-hover); }
-
-        /* ===== Loading / Error ===== */
-        .loading { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-        .loading .spinner { width: 36px; height: 36px; border: 4px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .error { text-align: center; padding: 30px 20px; color: var(--danger); }
-        .error small { display: block; margin-top: 6px; color: var(--text-muted); font-size: 13px; }
-
-        /* ===== Shortcuts ===== */
-        .shortcuts-hint {
-            font-size: 12px;
-            color: var(--text-muted);
             text-align: center;
-            margin-top: 14px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border-color);
-        }
-        .shortcuts-hint kbd { background: var(--bg-primary); padding: 2px 8px; border-radius: 4px; font-size: 11px; border: 1px solid var(--border-color); }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            .header { flex-direction: column; align-items: stretch; padding: 14px 16px; }
-            .header-right { flex-direction: column; align-items: stretch; }
-            .search-box input { width: 100%; }
-            .search-box input:focus { width: 100%; }
-            .tabs { flex-wrap: wrap; }
-            .tab-btn { font-size: 12px; padding: 6px 12px; flex: 1 1 auto; }
-            .main-content { padding: 14px; }
-            .story-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-            .story-content { font-size: 15px; padding: 12px 14px; }
-            .audio-controls { flex-direction: column; align-items: stretch; border-radius: var(--radius-sm); }
-            .btn-speaker { justify-content: center; }
-            .speed-group { margin-left: 0; justify-content: center; }
-            .form-row { grid-template-columns: 1fr; }
-            .all-vocab-grid { grid-template-columns: 1fr 1fr; }
-            .fav-vertical-item .row-top { flex-direction: column; align-items: flex-start; }
-            .fav-vertical-item .row-top .actions { margin-left: 0; align-self: flex-start; }
-        }
-        @media (max-width: 480px) {
-            .story-grid { grid-template-columns: 1fr 1fr; }
-            .all-vocab-grid { grid-template-columns: 1fr; }
-            .quiz-options { grid-template-columns: 1fr; }
-            .fav-vertical-item { padding: 10px 14px; }
-            .story-content { font-size: 14px; }
+            color: var(--text-muted);
         }
     </style>
 </head>
@@ -639,13 +85,11 @@
             <span class="badge">BETA</span>
         </div>
         <div class="header-right">
-            <div class="search-box">
-                <span class="icon">🔍</span>
-                <input type="text" id="globalSearch" placeholder="ค้นหา..." />
-            </div>
-            <div class="stats">📚 <span id="totalWords">0</span> คำ</div>
-            <button class="theme-toggle" id="themeToggle">🌙</button>
-        </div>
+            <div class="search-box" style="position:relative;flex:1;min-width:180px;">
+    <span class="icon">🔍</span>
+    <input type="text" id="globalSearch" placeholder="ค้นหาคำศัพท์ (ไทย/อังกฤษ)..." style="width:100%;padding:8px 16px 8px 38px;border-radius:20px;border:2px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-size:14px;outline:none;transition:0.3s;" />
+    <div id="searchResults"></div>
+</div>
     </header>
 
     <!-- TABS (8 เมนู) -->
@@ -809,6 +253,9 @@
     let quizIndex = 0;
     let quizScore = 0;
     let quizAnswered = false;
+    let allVocabularyData = [];
+    let allPhrasesData = [];
+    let allVerbsData = [];
 
     const speech = window.speechSynthesis;
 
@@ -1074,8 +521,8 @@
         }).filter(item => item.word && item.type && item.meaning);
 
         vocabCount.textContent = allVocabularyData.length;
-        applyVocabFilter(); // เรียกใช้ฟังก์ชันกรอง
-    }
+        applyVocabFilter(); // 
+}
 
         function applyVocabFilter() {
         const typeFilter = document.getElementById('vocabTypeFilter').value || 'all';
@@ -1117,14 +564,15 @@
                     // ================================================================
     //  11. RENDER VERBS (กริยา 3 ช่อง) - คลิกที่คำเพื่อฟังเสียง
     // ================================================================
-        function renderVerbs(rows) {
+            function renderVerbs(rows) {
         if (rows.length < 2) {
             verbList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
             verbCount.textContent = '0';
+            allVerbsData = [];
             return;
         }
         const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
-        const items = rows.slice(1).map(row => {
+        allVerbsData = rows.slice(1).map(row => {
             const get = (key) => {
                 const idx = header.indexOf(key);
                 return (idx !== -1 && idx < row.length) ? row[idx] : '';
@@ -1139,7 +587,7 @@
             };
         }).filter(item => item.base && item.meaning);
 
-        verbCount.textContent = items.length;
+        verbCount.textContent = allVerbsData.length;
 
         const html = `<div class="vocab-table-wrap">
             <table class="vocab-table">
@@ -1152,7 +600,7 @@
                         <th>ตัวอย่าง</th>
                     </tr>
                 </thead>
-                <tbody>${items.map(item => `
+                <tbody>${allVerbsData.map(item => `
                     <tr>
                         <td class="clickable-word" onclick="speakWord('${item.base}', event)" title="คลิกเพื่อฟังเสียง">${item.base}</td>
                         <td class="clickable-word" onclick="speakWord('${item.past}', event)" title="คลิกเพื่อฟังเสียง">${item.past || '-'}</td>
@@ -1192,7 +640,8 @@
         }).filter(item => item.phrase && item.meaning);
 
         phraseCount.textContent = allPhrasesData.length;
-        applyPhraseFilter(); // เรียกใช้ฟังก์ชันกรอง
+        allPhrasesData = items; // 
+        applyPhraseFilter();
     }
 
     function applyPhraseFilter() {
@@ -1808,9 +1257,171 @@
     document.getElementById('vocabTypeFilter')?.addEventListener('change', applyVocabFilter);
     document.getElementById('vocabSearchFilter')?.addEventListener('input', applyVocabFilter);
 
+    /    // ================================================================
+    //  22. GLOBAL SEARCH (ค้นหาทุกชีต)
     // ================================================================
-    //  22. START
-    // ================================================================
+    let searchData = [];
+
+    function buildSearchIndex() {
+        searchData = [];
+
+        // 1. จาก stories (คำศัพท์ในเรื่องสั้น)
+        allStories.forEach(s => {
+            s.vocab.forEach(v => {
+                searchData.push({
+                    word: v.word,
+                    meaning: v.meaning,
+                    type: v.type,
+                    source: '📖 ' + s.title,
+                    category: 'story'
+                });
+            });
+        });
+
+        // 2. จาก vocabulary (คลังคำศัพท์)
+        if (typeof allVocabularyData !== 'undefined' && allVocabularyData.length) {
+            allVocabularyData.forEach(v => {
+                searchData.push({
+                    word: v.word,
+                    meaning: v.meaning,
+                    type: v.type,
+                    source: '📚 คำศัพท์',
+                    category: 'vocabulary'
+                });
+            });
+        }
+
+        // 3. จาก favorites (คำที่ชอบ)
+        favoritesData.forEach(f => {
+            searchData.push({
+                word: f.word,
+                meaning: f.meaning,
+                type: f.type,
+                source: '⭐ คำที่ชอบ' + (f.category ? ' (' + f.category + ')' : ''),
+                category: 'favorite'
+            });
+        });
+
+        // 4. จาก phrases (วลีสนทนา)
+        if (typeof allPhrasesData !== 'undefined' && allPhrasesData.length) {
+            allPhrasesData.forEach(p => {
+                searchData.push({
+                    word: p.phrase,
+                    meaning: p.meaning,
+                    type: 'phrase',
+                    source: '💬 วลีสนทนา',
+                    category: 'phrase'
+                });
+            });
+        }
+
+        // 5. จาก verb_forms (กริยา 3 ช่อง)
+        if (typeof allVerbsData !== 'undefined' && allVerbsData.length) {
+            allVerbsData.forEach(v => {
+                searchData.push({
+                    word: v.base,
+                    meaning: v.meaning,
+                    type: 'verb',
+                    source: '📗 กริยา 3 ช่อง',
+                    category: 'verb'
+                });
+            });
+        }
+    }
+
+    function performSearch(query) {
+        const results = document.getElementById('searchResults');
+        if (!query || query.trim().length < 1) {
+            results.style.display = 'none';
+            return;
+        }
+
+        const q = query.trim().toLowerCase();
+        const matched = searchData.filter(item =>
+            item.word.toLowerCase().includes(q) ||
+            item.meaning.includes(q)
+        );
+
+        const topResults = matched.slice(0, 25);
+
+        if (topResults.length === 0) {
+            results.innerHTML = `<div class="no-result">🔍 ไม่พบคำศัพท์ "${query}"</div>`;
+            results.style.display = 'block';
+            return;
+        }
+
+        results.innerHTML = topResults.map(item => `
+            <div class="result-item" onclick="selectSearchResult('${item.word.replace(/'/g, "\\'")}', '${item.meaning.replace(/'/g, "\\'")}')">
+                <span class="word">${item.word}</span>
+                <span class="type-badge">${item.type}</span>
+                <span class="meaning">${item.meaning}</span>
+                <span class="source">${item.source}</span>
+                <span class="speaker-icon" onclick="event.stopPropagation(); speakWord('${item.word.replace(/'/g, "\\'")}', event)">🔊</span>
+            </div>
+        `).join('');
+
+        results.style.display = 'block';
+    }
+
+    function selectSearchResult(word, meaning) {
+        const results = document.getElementById('searchResults');
+        const input = document.getElementById('globalSearch');
+        input.value = word + ' = ' + meaning;
+        results.style.display = 'none';
+        // ไปที่แท็บคำศัพท์ทั้งหมด
+        switchTab('vocab');
+        const searchFilter = document.getElementById('vocabSearchFilter');
+        if (searchFilter) searchFilter.value = word;
+        if (typeof applyVocabFilter === 'function') applyVocabFilter();
+    }
+
+    // ผูก Event การค้นหา
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('globalSearch');
+        const results = document.getElementById('searchResults');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                performSearch(this.value);
+            });
+
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const firstResult = results.querySelector('.result-item');
+                    if (firstResult) firstResult.click();
+                }
+            });
+        }
+
+        // คลิกนอกกล่องค้นหาให้ปิดผลลัพธ์
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-box')) {
+                results.style.display = 'none';
+            }
+        });
+    });
+
+    // อัปเดต Search Index เมื่อโหลดข้อมูลเสร็จ
+    function updateSearchIndex() {
+        setTimeout(() => {
+            // เก็บข้อมูล verbs ถ้ามี
+            if (typeof allVerbsData === 'undefined') {
+                allVerbsData = [];
+                // ลองดึงจากตารางกริยา
+                const verbRows = document.querySelectorAll('#verbList .vocab-table tbody tr');
+                verbRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 4) {
+                        allVerbsData.push({
+                            base: cells[0].textContent.trim(),
+                            meaning: cells[3].textContent.trim()
+                        });
+                    }
+                });
+            }
+            buildSearchIndex();
+        }, 1000);
+    }
     loadData();
 </script>
 </body>
