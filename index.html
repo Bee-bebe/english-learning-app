@@ -699,9 +699,13 @@
             <div id="verbList" style="max-height:520px;overflow-y:auto;"><div class="loading">กำลังโหลด...</div></div>
         </section>
 
-        <!-- TAB: PHRASES -->
+                <!-- TAB: PHRASES -->
         <section class="tab-panel" id="panel-phrases">
-            <h3 style="margin-bottom:12px;">💬 วลีสนทนาที่ใช้บ่อย</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
+                <span style="font-weight:600;font-size:14px;color:var(--text-secondary);">🔍 ค้นหาวลี:</span>
+                <input type="text" id="phraseSearchInput" placeholder="พิมพ์คำค้น (ไทย/อังกฤษ)..." style="flex:1;min-width:200px;padding:8px 16px;border-radius:20px;border:2px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:14px;font-family:var(--font);outline:none;transition:var(--transition);" />
+                <span style="font-size:14px;color:var(--text-muted);">พบ <span id="phraseFilterCount">0</span> วลี</span>
+            </div>
             <div id="phraseList" class="fav-vertical-list"><div class="loading">กำลังโหลด...</div></div>
         </section>
 
@@ -1161,41 +1165,74 @@
         </div>`;
         verbList.innerHTML = html;
     }
+        // ================================================================
+    //  12. RENDER PHRASES (วลีสนทนา) + ค้นหา
     // ================================================================
-    //  12. RENDER PHRASES (วลีสนทนา)
-    // ================================================================
+    let allPhrasesData = [];
+
     function renderPhrases(rows) {
         if (rows.length < 2) {
             phraseList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
             phraseCount.textContent = '0';
+            allPhrasesData = [];
             return;
         }
         const header = rows[0].map(h => h.toLowerCase().replace(/ /g, '_'));
-        const items = rows.slice(1).map(row => {
+        allPhrasesData = rows.slice(1).map(row => {
             const get = (key) => {
                 const idx = header.indexOf(key);
                 return (idx !== -1 && idx < row.length) ? row[idx] : '';
             };
-            return { id: get('id'), phrase: get('phrase'), meaning: get('meaning'), example: get('example') };
+            return {
+                id: get('id'),
+                phrase: get('phrase'),
+                meaning: get('meaning'),
+                example: get('example')
+            };
         }).filter(item => item.phrase && item.meaning);
 
-        phraseCount.textContent = items.length;
+        phraseCount.textContent = allPhrasesData.length;
+        applyPhraseFilter(); // เรียกใช้ฟังก์ชันกรอง
+    }
 
-        const html = items.map(item => `
+    function applyPhraseFilter() {
+        const searchInput = document.getElementById('phraseSearchInput');
+        const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+        let filtered = allPhrasesData;
+        if (searchText) {
+            filtered = filtered.filter(item =>
+                item.phrase.toLowerCase().includes(searchText) ||
+                item.meaning.includes(searchText) ||
+                (item.example && item.example.toLowerCase().includes(searchText))
+            );
+        }
+
+        document.getElementById('phraseFilterCount').textContent = filtered.length;
+
+        const html = filtered.map(item => `
             <div class="fav-vertical-item">
                 <div class="row-top">
                     <span class="word">${item.phrase}</span>
                     <span class="meaning">${item.meaning}</span>
                     <div class="actions">
-                        <button class="vocab-speaker-btn" onclick="speakWord('${item.phrase}', event)">🔊</button>
+                        <button class="vocab-speaker-btn" onclick="speakWord('${item.phrase.replace(/'/g, "\\'")}', event)">🔊</button>
                     </div>
                 </div>
                 ${item.example ? `<div class="row-detail"><span class="example">📖 ${item.example}</span></div>` : ''}
             </div>
         `).join('');
-        phraseList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่มีข้อมูล</div>';
+
+        phraseList.innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);">ไม่พบวลีที่ค้นหา</div>';
     }
 
+    // ผูก Event การค้นหา
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('phraseSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', applyPhraseFilter);
+        }
+    });
     // ================================================================
     //  13. RENDER STRUCTURES (โครงสร้างประโยค)
     // ================================================================
@@ -1748,7 +1785,7 @@
         btn.addEventListener('click', function() { switchTab(this.dataset.tab); });
     });
 
-    function switchTab(tab) {
+        function switchTab(tab) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelector(`.tab-btn[data-tab="${tab}"]`)?.classList.add('active');
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1757,6 +1794,12 @@
         if (tab === 'favorites') renderFavorites();
         if (tab === 'addword') renderMyVocab();
         if (tab === 'quiz') initQuiz();
+        if (tab === 'phrases') {
+            // รีเซ็ตการค้นหาและแสดงผลใหม่
+            const searchInput = document.getElementById('phraseSearchInput');
+            if (searchInput) searchInput.value = '';
+            applyPhraseFilter();
+        }
     }
 
         // ================================================================
