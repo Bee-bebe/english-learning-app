@@ -1262,7 +1262,7 @@
     // ================================================================
     let searchData = [];
 
-    function buildSearchIndex() {
+        function buildSearchIndex() {
         searchData = [];
 
         // 1. จาก stories (คำศัพท์ในเรื่องสั้น)
@@ -1272,38 +1272,40 @@
                     word: v.word,
                     meaning: v.meaning,
                     type: v.type,
-                    source: '📖 ' + s.title,
+                    source: '📖 เรื่องสั้น: ' + s.title,
                     category: 'story'
                 });
             });
         });
 
         // 2. จาก vocabulary (คลังคำศัพท์)
-        if (typeof allVocabularyData !== 'undefined' && allVocabularyData.length) {
+        if (allVocabularyData && allVocabularyData.length) {
             allVocabularyData.forEach(v => {
                 searchData.push({
                     word: v.word,
                     meaning: v.meaning,
                     type: v.type,
-                    source: '📚 คำศัพท์',
+                    source: '📚 คำศัพท์ทั้งหมด',
                     category: 'vocabulary'
                 });
             });
         }
 
         // 3. จาก favorites (คำที่ชอบ)
-        favoritesData.forEach(f => {
-            searchData.push({
-                word: f.word,
-                meaning: f.meaning,
-                type: f.type,
-                source: '⭐ คำที่ชอบ' + (f.category ? ' (' + f.category + ')' : ''),
-                category: 'favorite'
+        if (favoritesData && favoritesData.length) {
+            favoritesData.forEach(f => {
+                searchData.push({
+                    word: f.word,
+                    meaning: f.meaning,
+                    type: f.type,
+                    source: '⭐ คำที่ชอบ' + (f.category ? ' (' + f.category + ')' : ''),
+                    category: 'favorite'
+                });
             });
-        });
+        }
 
         // 4. จาก phrases (วลีสนทนา)
-        if (typeof allPhrasesData !== 'undefined' && allPhrasesData.length) {
+        if (allPhrasesData && allPhrasesData.length) {
             allPhrasesData.forEach(p => {
                 searchData.push({
                     word: p.phrase,
@@ -1314,6 +1316,22 @@
                 });
             });
         }
+
+        // 5. จาก verb_forms (กริยา 3 ช่อง)
+        if (allVerbsData && allVerbsData.length) {
+            allVerbsData.forEach(v => {
+                searchData.push({
+                    word: v.base,
+                    meaning: v.meaning,
+                    type: 'verb',
+                    source: '📗 กริยา 3 ช่อง',
+                    category: 'verb'
+                });
+            });
+        }
+
+        console.log('🔍 สร้างดัชนีค้นหา:', searchData.length, 'คำ');
+    }
 
         // 5. จาก verb_forms (กริยา 3 ช่อง)
         if (typeof allVerbsData !== 'undefined' && allVerbsData.length) {
